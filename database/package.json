@@ -1,0 +1,24 @@
+{
+  "name": "recipehub/database",
+  "version": "1.0.0",
+  "description": "Database Service",
+  "author": "Mac Deluca",
+  "license": "ISC",
+  "scripts": {
+    "migrate-latest": "knex migrate:latest --knexfile ./src/knexfile.ts",
+    "migrate-rollback": "knex migrate:rollback --knexfile ./src/knexfile.ts",
+    "seed": "knex seed:run --knexfile ./src/knexfile.ts",
+    "migrate:seed": "npm run migrate-latest && npm run seed",
+    "create-migration": "knex migrate:make --knexfile ./src/knexfile.ts -x ts",
+    "create-seed": "knex seed:make --knexfile ./src/knexfile.ts -x ts"
+  },
+  "dependencies": {
+    "knex": "^3.1.0",
+    "pg": "^8.12.0",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
+  }
+}

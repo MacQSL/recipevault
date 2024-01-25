@@ -1,0 +1,10 @@
+FROM postgres:16
+
+ARG TIMEZONE=America/Vancouver
+
+# set time zone
+RUN ln -snf /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE > /etc/timezone
+
+EXPOSE $DB_PORT
+
+CMD ["postgres"]
