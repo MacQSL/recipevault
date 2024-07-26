@@ -1,0 +1,11 @@
+{
+  "name": "recipehub-api",
+  "version": "1.0.0",
+  "description": "API for recipehub application.",
+  "author": "Mac Deluca",
+  "license": "ISC",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
