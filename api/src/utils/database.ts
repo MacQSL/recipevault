@@ -6,7 +6,7 @@ const CONNECTION_TIMEOUT_MS = 5000;
  * Knex transaction provider instance.
  *
  */
-type Connection = knex.Knex.Transaction;
+export type Connection = knex.Knex.Transaction;
 
 /**
  * Knex client config.
@@ -19,7 +19,7 @@ const _knex = knex({
     port: Number(process.env.DB_PORT),
     user: process.env.DB_USER_API,
     password: process.env.DB_USER_API_PASSWORD,
-    database: process.env.DB,
+    database: process.env.DB_DATABASE,
   },
   pool: { min: 0, max: 10 },
 });
@@ -41,7 +41,7 @@ export const getDBConnection = async (): Promise<Connection> => {
 
   setTimeout(() => {
     if (!connection.isCompleted()) {
-      console.warn("TRANSACTION OPENED WITHOUT BEING CLOSED!");
+      throw new Error("Transaction opened without being closed.");
     }
   }, CONNECTION_TIMEOUT_MS);
 

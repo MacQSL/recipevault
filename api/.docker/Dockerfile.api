@@ -1,6 +1,6 @@
 FROM node:20
 
-ENV HOME=/opt/database
+ENV HOME=/opt/api
 
 RUN mkdir -p $HOME
 

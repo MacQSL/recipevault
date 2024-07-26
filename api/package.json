@@ -4,8 +4,7 @@
   "description": "API for recipehub application.",
   "author": "Mac Deluca",
   "license": "ISC",
-  "main": "server.ts",
-  "type": "module",
+  "main": "server.js",
   "scripts": {
     "build": "swc src --out-dir dist",
     "start": "node dist/src/server.js",
