@@ -12,10 +12,14 @@ import { RecipeService } from "../recipe/recipe-service";
  */
 export class CookbookService implements DBService {
   repository: CookbookRepository;
-  recipeService: RecipeService;
+  private recipeService: RecipeService;
 
   constructor(connection: Connection) {
     this.repository = new CookbookRepository(connection);
     this.recipeService = new RecipeService(connection);
+  }
+
+  async getUserCookbooks(userId: number) {
+    return this.repository.getCookbooksByUserId(userId);
   }
 }

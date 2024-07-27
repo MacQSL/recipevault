@@ -23,6 +23,7 @@ export class RecipeService implements DBService {
    * @returns {Promise<IRecipe>}
    */
   async getRecipe(cookbookId: number): Promise<IRecipe> {
+    // TODO: This should also get the ingredients
     return this.repository.getRecipeById(cookbookId);
   }
 

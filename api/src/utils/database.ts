@@ -1,12 +1,12 @@
 import knex from "knex";
-
-const CONNECTION_TIMEOUT_MS = 5000;
+import { Sql } from "sql-template-tag";
+import { APIError500 } from "./error";
 
 /**
- * Knex transaction provider instance.
+ * Connection timeout milliseconds (5 seconds).
  *
  */
-export type Connection = knex.Knex.Transaction;
+const CONNECTION_TIMEOUT_MS = 5000;
 
 /**
  * Knex client config.
@@ -24,8 +24,22 @@ const _knex = knex({
   pool: { min: 0, max: 10 },
 });
 
-// Singleton instance
+/**
+ * Knex transaction client - singleton instance
+ *
+ */
 const knexTransactionClient = _knex.transactionProvider();
+
+/**
+ * Database connection - Knex transaction provider instance.
+ *
+ */
+export type Connection = {
+  knex: knex.Knex.Transaction;
+  sql(query: Sql): Promise<any>;
+  commit(): void;
+  rollback(): void;
+};
 
 /**
  * Get database connection instance, uses knex transactionProvider.
@@ -37,13 +51,23 @@ const knexTransactionClient = _knex.transactionProvider();
  * @returns {Promise<Connection>} Knex transaction provider instance
  */
 export const getDBConnection = async (): Promise<Connection> => {
-  const connection = await knexTransactionClient();
+  const knexClient = await knexTransactionClient();
 
+  // If connection opened and not closed after 5 seconds throw error
   setTimeout(() => {
-    if (!connection.isCompleted()) {
-      throw new Error("Transaction opened without being closed.");
+    if (!knexClient.isCompleted()) {
+      throw new APIError500("Transaction opened without being closed.");
     }
   }, CONNECTION_TIMEOUT_MS);
 
-  return connection;
+  return {
+    knex: knexClient,
+    sql: async (query: Sql) => knexClient.raw(query.sql, query.values),
+    commit: () => {
+      knexClient.commit();
+    },
+    rollback: () => {
+      knexClient.rollback();
+    },
+  };
 };

@@ -1,8 +1,7 @@
 import { Repository } from "../repository";
+import sql from "sql-template-tag";
 
 export class CookbookRepository extends Repository {
-  private cookbookColumns = [];
-
   /**
    * Get cookbooks by user id.
    *
@@ -11,9 +10,16 @@ export class CookbookRepository extends Repository {
    * @returns {*}
    */
   async getCookbooksByUserId(userId: number) {
-    return this.connection
-      .select(this.cookbookColumns)
-      .from("recipe")
-      .where({ user_id: userId });
+    const sqlStatement = sql`
+      SELECT
+        cookbook_id,
+        name,
+        description
+      FROM cookbook
+      JOIN user_cookbook u
+      ON u.user_id = ${userId};
+    `;
+
+    return this.connection.sql(sqlStatement);
   }
 }
