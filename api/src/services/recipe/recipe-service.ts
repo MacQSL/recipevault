@@ -16,6 +16,17 @@ export class RecipeService implements DBService {
   }
 
   /**
+   * Get recipe.
+   *
+   * @async
+   * @param {number} cookbookId
+   * @returns {Promise<IRecipe>}
+   */
+  async getRecipe(cookbookId: number): Promise<IRecipe> {
+    return this.repository.getRecipeById(cookbookId);
+  }
+
+  /**
    * Get cookbook recipes.
    *
    * @async
@@ -23,6 +34,6 @@ export class RecipeService implements DBService {
    * @returns {Promise<IRecipe[]>}
    */
   async getCookbookRecipes(cookbookId: number): Promise<IRecipe[]> {
-    return this.repository.getRecipesFromCookbookId(cookbookId);
+    return this.repository.getRecipesByCookbookId(cookbookId);
   }
 }
