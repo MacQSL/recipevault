@@ -23,7 +23,7 @@ export async function up(knex: Knex): Promise<void> {
 
     -- create api user and grant permissions
     CREATE USER ${DB_USER_API} PASSWORD '${DB_USER_API_PASSWORD}';
-    ALTER DEFAULT PRIVILEGES IN SCHEMA ${DB_SCHEMA} GRANT ALL ON TABLES TO ${DB_USER_API};
+    ALTER DEFAULT PRIVILEGES GRANT ALL ON TABLES TO ${DB_USER_API};
   `);
 
   //NOTE: This migration is making the assumption that the SYSTEM user is id 1.
