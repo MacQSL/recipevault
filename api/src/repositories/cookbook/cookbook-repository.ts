@@ -1,5 +1,6 @@
 import sql from 'sql-template-tag';
 import { Repository } from '../repository.js';
+import { ICookbook } from './cookbook-repository.interface.js';
 
 /**
  * Cookbook Repository class.
@@ -13,9 +14,9 @@ export class CookbookRepository extends Repository {
    *
    * @async
    * @param {number} userId
-   * @returns {*}
+   * @returns {ICookbook[]}
    */
-  async getCookbooksByUserId(userId: number) {
+  async getCookbooksByUserId(userId: number): Promise<ICookbook[]> {
     const sqlStatement = sql`
       SELECT
         c.cookbook_id,

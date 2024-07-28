@@ -1,10 +1,10 @@
-import { Repository } from '../repositories/repository';
-import { Connection } from '../utils/database';
+import { Repository } from '../repositories/repository.js';
+import { Connection } from '../utils/database.js';
 
 /**
  * Database Service class.
  *
- * @description Used to implement service classes which require a repository dependency.
+ * Note: All database service classes should `implemement` this class.
  *
  * @class DBService
  * @property {Repository} repository - Repository dependency

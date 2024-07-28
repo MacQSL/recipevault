@@ -45,7 +45,7 @@ export type Connection = {
    * Execute query with raw SQL (sql-template-tag).
    *
    */
-  sql(query: Sql): Promise<any>;
+  sql(query: Sql): Promise<any[]>;
   /**
    * Commit the transaction.
    *

@@ -2,8 +2,6 @@ import { Knex } from 'knex';
 
 // NOTE: Static ids in the seed might be problematic
 
-const test = 'test';
-
 export async function seed(knex: Knex): Promise<void> {
   // Insert development users
   // Don't delete the system user populated by the migration
