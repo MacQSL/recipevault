@@ -50,6 +50,28 @@ services:
         db:
           condition: service_healthy
 
+  # API service
+  api:
+      image: ${DOCKER_PROJECT_NAME}-api-img
+      container_name: ${DOCKER_PROJECT_NAME}-api-container
+      build:
+        context: ./api
+        dockerfile: ./.docker/Dockerfile.api
+      environment:
+        - NODE_ENV=${NODE_ENV}
+        - DB_HOST=${DB_HOST}
+        - DB_PORT=${DB_PORT}
+        - DB_DATABASE=${DB_DATABASE}
+        - DB_USER_API=${DB_USER_API}
+        - DB_USER_API_PASSWORD=${DB_USER_API_PASSWORD}
+        - API_PORT=${API_PORT}
+      volumes:
+        - ./api:/opt/api
+        - /opt/api/node_modules # prevents local node_modules overriding container node_modules
+      networks:
+        - recipehub-network
+      command: ['npm', 'run', 'dev']
+
 networks:
   recipehub-network:
     driver: bridge

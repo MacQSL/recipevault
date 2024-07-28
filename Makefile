@@ -53,10 +53,10 @@ build-backend: ## Builds all backend containers
 	@echo "==============================================="
 	@echo "Make: build-backend - building backend images"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml up -d --build db migrations
+	@docker-compose -f docker-compose.yml up -d --build db migrations api
 
 run-backend: ## Runs all backend containers
 	@echo "==============================================="
 	@echo "Make: run-backend - running backend images"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml up -d db migrations
+	@docker-compose -f docker-compose.yml up -d db migrations api
