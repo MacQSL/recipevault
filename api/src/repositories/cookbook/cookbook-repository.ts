@@ -21,8 +21,8 @@ export class CookbookRepository extends Repository {
         c.cookbook_id,
         c.name,
         c.description
-      FROM cookbook c
-      LEFT JOIN user_cookbook u
+      FROM user_cookbook u
+      LEFT JOIN cookbook c
       ON u.user_id = ${userId};
     `;
 
