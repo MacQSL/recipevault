@@ -1,7 +1,7 @@
-import { CookbookRepository } from "src/repositories/cookbook/cookbook-repository";
-import { Connection } from "../../utils/database";
-import { DBService } from "../db-service";
-import { RecipeService } from "../recipe/recipe-service";
+import { CookbookRepository } from '../../repositories/cookbook/cookbook-repository.js';
+import { Connection } from '../../utils/database.js';
+import { DBService } from '../db-service.js';
+import { RecipeService } from '../recipe/recipe-service.js';
 
 /**
  * Cookbook Service class.

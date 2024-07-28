@@ -1,4 +1,4 @@
-import { Connection } from "../utils/database";
+import { Connection } from '../utils/database.js';
 
 /**
  * Base repository class.

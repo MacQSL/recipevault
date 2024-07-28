@@ -1,14 +1,15 @@
-import { Repository } from "../repository";
+import SQL from 'sql-template-tag';
+import { APIError404 } from '../../utils/error.js';
+import { Repository } from '../repository.js';
+import { IRecipe } from './recipe-repository.interface.js';
 
+/**
+ * Recipe Repository class.
+ *
+ * @class RecipeRepository
+ * @extends Repository
+ */
 export class RecipeRepository extends Repository {
-  private recipeColumns = [
-    "recipe_id",
-    "cookbook_id",
-    "name",
-    "url",
-    "description",
-  ];
-
   /**
    * Get recipe by id.
    *
@@ -18,15 +19,21 @@ export class RecipeRepository extends Repository {
    * @returns {IRecipe}
    */
   async getRecipeById(recipeId: number): Promise<IRecipe> {
-    const response = await this.connection
-      .select(this.recipeColumns)
-      .from("recipe")
-      .where({ recipe_id: recipeId });
+    const sqlStatement = SQL`
+      SELECT
+        recipe_id,
+        cookbook_id,
+        name,
+        url,
+        description
+      FROM recipe
+      WHERE recipe_id = ${recipeId};
+    `;
+
+    const response = await this.connection.sql(sqlStatement);
 
     if (!response.length) {
-      throw new APIError404("Recipe not found.", [
-        "RecipeRepository->getRecipeById",
-      ]);
+      throw new APIError404('Recipe not found.', ['RecipeRepository->getRecipeById']);
     }
 
     return response[0];
@@ -40,9 +47,17 @@ export class RecipeRepository extends Repository {
    * @returns {Promise<IRecipe[]>}
    */
   async getRecipesByCookbookId(cookbookId: number): Promise<IRecipe[]> {
-    return this.connection
-      .select(this.recipeColumns)
-      .from("recipe")
-      .where({ cookbook_id: cookbookId });
+    const sqlStatement = SQL`
+      SELECT
+        recipe_id,
+        cookbook_id,
+        name,
+        url,
+        description
+      FROM recipe
+      WHERE recipe_id = ${cookbookId};
+    `;
+
+    return this.connection.sql(sqlStatement);
   }
 }

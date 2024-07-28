@@ -1,20 +1,25 @@
 enum ErrorType {
-  API_ERROR = "ApiError",
-  BAD_REQUEST = "BadRequestError",
-  NOT_FOUND = "NotFoundError",
-  SERVER_ERROR = "InternalServerError",
+  API_ERROR = 'ApiError',
+  BAD_REQUEST = 'BadRequestError',
+  NOT_FOUND = 'NotFoundError',
+  SERVER_ERROR = 'InternalServerError'
 }
 
-// TODO: Update comments
+/**
+ * API Error class.
+ *
+ * @description Base class for API errors.
+ *
+ * @extends Error
+ * @property {number} status - HTTP status code
+ * @property {Array<string | object>} [errors] - Additional errors or information
+ * @property {ErrorType} name - Name of error
+ */
 class APIError extends Error {
   status: number;
   errors?: Array<string | object>;
 
-  constructor(
-    message: string,
-    status: number,
-    errors?: Array<string | object>,
-  ) {
+  constructor(message: string, status: number, errors?: Array<string | object>) {
     super(message);
     this.status = status;
     this.errors = errors;
@@ -22,6 +27,13 @@ class APIError extends Error {
   }
 }
 
+/**
+ * Bad request 400 error.
+ *
+ * @description Request formatted incorrectly (body, params, query etc.)
+ *
+ * @extends APIError
+ */
 export class APIError400 extends APIError {
   constructor(message: string, errors?: Array<string | object>) {
     super(message, 400, errors);
@@ -29,6 +41,13 @@ export class APIError400 extends APIError {
   }
 }
 
+/**
+ * Not found 404 error.
+ *
+ * @description Requested resource not found.
+ *
+ * @extends APIError
+ */
 export class APIError404 extends APIError {
   constructor(message: string, errors?: Array<string | object>) {
     super(message, 404, errors);
@@ -36,6 +55,13 @@ export class APIError404 extends APIError {
   }
 }
 
+/**
+ * Internal server 500 error.
+ *
+ * @description Server failed request.
+ *
+ * @extends APIError
+ */
 export class APIError500 extends APIError {
   constructor(message: string, errors?: Array<string | object>) {
     super(message, 500, errors);

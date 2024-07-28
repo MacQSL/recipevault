@@ -1,6 +1,7 @@
-import { RecipeRepository } from "../../repositories/recipe/recipe-repository";
-import { Connection } from "../../utils/database";
-import { DBService } from "../db-service";
+import { IRecipe } from '../../repositories/recipe/recipe-repository.interface.js';
+import { RecipeRepository } from '../../repositories/recipe/recipe-repository.js';
+import { Connection } from '../../utils/database.js';
+import { DBService } from '../db-service.js';
 
 /**
  * Recipe Service class.

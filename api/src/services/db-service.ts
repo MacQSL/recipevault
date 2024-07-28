@@ -1,5 +1,5 @@
-import { Repository } from "../repositories/repository";
-import { Connection } from "../utils/database";
+import { Repository } from '../repositories/repository';
+import { Connection } from '../utils/database';
 
 /**
  * Database Service class.
