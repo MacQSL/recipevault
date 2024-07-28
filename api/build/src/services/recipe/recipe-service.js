@@ -155,7 +155,6 @@ function _ts_generator(thisArg, body) {
     }
 }
 import { RecipeRepository } from '../../repositories/recipe/recipe-repository.js';
-var test = 'test';
 /**
  * Recipe Service class.
  *
