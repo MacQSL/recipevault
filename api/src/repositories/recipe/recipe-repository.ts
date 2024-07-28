@@ -3,6 +3,8 @@ import { APIError404 } from '../../utils/error.js';
 import { Repository } from '../repository.js';
 import { IRecipe } from './recipe-repository.interface.js';
 
+const test = "test";
+
 /**
  * Recipe Repository class.
  *
@@ -55,7 +57,7 @@ export class RecipeRepository extends Repository {
         url,
         description
       FROM recipe
-      WHERE recipe_id = ${cookbookId};
+      WHERE cookbook_id = ${cookbookId};
     `;
 
     return this.connection.sql(sqlStatement);

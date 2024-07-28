@@ -229,7 +229,7 @@ function _templateObject() {
 }
 function _templateObject1() {
     var data = _tagged_template_literal([
-        "\n      SELECT\n        recipe_id,\n        cookbook_id,\n        name,\n        url,\n        description\n      FROM recipe\n      WHERE recipe_id = ",
+        "\n      SELECT\n        recipe_id,\n        cookbook_id,\n        name,\n        url,\n        description\n      FROM recipe\n      WHERE cookbook_id = ",
         ";\n    "
     ]);
     _templateObject1 = function _templateObject() {
@@ -240,6 +240,7 @@ function _templateObject1() {
 import SQL from 'sql-template-tag';
 import { APIError404 } from '../../utils/error.js';
 import { Repository } from '../repository.js';
+var test = "test";
 /**
  * Recipe Repository class.
  *

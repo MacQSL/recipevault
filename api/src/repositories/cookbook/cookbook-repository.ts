@@ -1,5 +1,5 @@
-import { Repository } from '../repository.js';
 import sql from 'sql-template-tag';
+import { Repository } from '../repository.js';
 
 /**
  * Cookbook Repository class.
@@ -21,9 +21,10 @@ export class CookbookRepository extends Repository {
         c.cookbook_id,
         c.name,
         c.description
-      FROM user_cookbook u
-      LEFT JOIN cookbook c
-      ON u.user_id = ${userId};
+      FROM cookbook c
+      INNER JOIN user_cookbook u
+      ON c.cookbook_id = u.cookbook_id
+      WHERE u.user_id = ${userId};
     `;
 
     return this.connection.sql(sqlStatement);

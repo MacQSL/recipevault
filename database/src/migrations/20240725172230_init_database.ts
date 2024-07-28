@@ -21,13 +21,15 @@ export async function up(knex: Knex): Promise<void> {
     -- grant ownership to database super user
     ALTER SCHEMA ${DB_SCHEMA} OWNER TO ${DB_USER};
 
-    -- Permantely set search path for DB_USER (postgres)
-    ALTER ROLE ${DB_USER} SET search_path TO ${DB_SCHEMA}, public;
-
     -- create api user and grant permissions
     CREATE USER ${DB_USER_API} PASSWORD '${DB_USER_API_PASSWORD}';
     GRANT USAGE ON SCHEMA ${DB_SCHEMA} TO ${DB_USER_API};
     ALTER DEFAULT PRIVILEGES GRANT ALL ON TABLES TO ${DB_USER_API};
+
+    -- set search paths for database users
+    SET search_path TO ${DB_SCHEMA}, public;
+    ALTER ROLE ${DB_USER} SET search_path TO ${DB_SCHEMA}, public;
+    ALTER ROLE ${DB_USER_API} SET search_path TO ${DB_SCHEMA}, public;
   `);
 
   //NOTE: This migration is making the assumption that the SYSTEM user is id 1.

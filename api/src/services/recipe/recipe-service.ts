@@ -3,6 +3,8 @@ import { RecipeRepository } from '../../repositories/recipe/recipe-repository.js
 import { Connection } from '../../utils/database.js';
 import { DBService } from '../db-service.js';
 
+const test = 'test';
+
 /**
  * Recipe Service class.
  *

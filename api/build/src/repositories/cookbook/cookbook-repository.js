@@ -219,7 +219,7 @@ function _ts_generator(thisArg, body) {
 }
 function _templateObject() {
     var data = _tagged_template_literal([
-        "\n      SELECT\n        c.cookbook_id,\n        c.name,\n        c.description\n      FROM user_cookbook u\n      LEFT JOIN cookbook c\n      ON u.user_id = ",
+        "\n      SELECT\n        c.cookbook_id,\n        c.name,\n        c.description\n      FROM cookbook c\n      INNER JOIN user_cookbook u\n      ON c.cookbook_id = u.cookbook_id\n      WHERE u.user_id = ",
         ";\n    "
     ]);
     _templateObject = function _templateObject() {
@@ -227,8 +227,8 @@ function _templateObject() {
     };
     return data;
 }
-import { Repository } from '../repository.js';
 import sql from 'sql-template-tag';
+import { Repository } from '../repository.js';
 /**
  * Cookbook Repository class.
  *

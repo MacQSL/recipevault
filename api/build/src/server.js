@@ -123,8 +123,6 @@ function _ts_generator(thisArg, body) {
     }
 }
 import express from 'express';
-import { getDBConnection } from './utils/database.js';
-import { CookbookService } from './services/cookbook/cookbook-service.js';
 var PORT = Number(process.env.API_PORT);
 var app = express();
 app.get('/health', function() {
@@ -141,29 +139,10 @@ app.get('/health', function() {
     };
 }());
 app.listen(PORT, /*#__PURE__*/ _async_to_generator(function() {
-    var connection, service, data;
     return _ts_generator(this, function(_state) {
-        switch(_state.label){
-            case 0:
-                console.log("\uD83C\uDF54 Server started on port ".concat(PORT));
-                return [
-                    4,
-                    getDBConnection()
-                ];
-            case 1:
-                connection = _state.sent();
-                service = new CookbookService(connection);
-                return [
-                    4,
-                    service.getUserCookbooks(2)
-                ];
-            case 2:
-                data = _state.sent();
-                connection.commit();
-                console.log(data);
-                return [
-                    2
-                ];
-        }
+        console.log("\uD83C\uDF54 Server started on port ".concat(PORT));
+        return [
+            2
+        ];
     });
 }));
