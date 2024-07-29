@@ -1,9 +1,8 @@
 import SQL from 'sql-template-tag';
 import { APIError404 } from '../../utils/error.js';
 import { Repository } from '../repository.js';
-import { IRecipe } from './recipe-repository.interface.js';
 
-const test = "test";
+const test = 'test';
 
 /**
  * Recipe Repository class.
@@ -18,9 +17,9 @@ export class RecipeRepository extends Repository {
    * @async
    * @param {number} recipeId
    * @throws {APIError404} - Recipe not found
-   * @returns {IRecipe}
+   * @returns {IRecipeRecord}
    */
-  async getRecipeById(recipeId: number): Promise<IRecipe> {
+  async getRecipeById(recipeId: number): Promise<IRecipeRecord> {
     const sqlStatement = SQL`
       SELECT
         recipe_id,
@@ -46,9 +45,9 @@ export class RecipeRepository extends Repository {
    *
    * @async
    * @param {number} cookbookId
-   * @returns {Promise<IRecipe[]>}
+   * @returns {Promise<IRecipeRecord[]>}
    */
-  async getRecipesByCookbookId(cookbookId: number): Promise<IRecipe[]> {
+  async getRecipesByCookbookId(cookbookId: number): Promise<IRecipeRecord[]> {
     const sqlStatement = SQL`
       SELECT
         recipe_id,

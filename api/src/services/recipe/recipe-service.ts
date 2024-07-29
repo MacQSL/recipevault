@@ -1,4 +1,4 @@
-import { IRecipe } from '../../repositories/recipe/recipe-repository.interface.js';
+import { IRecipeRecord } from '../../repositories/recipe/recipe-repository.interface.js';
 import { RecipeRepository } from '../../repositories/recipe/recipe-repository.js';
 import { Connection } from '../../utils/database.js';
 import { DBService } from '../db-service.js';
@@ -21,9 +21,9 @@ export class RecipeService implements DBService {
    *
    * @async
    * @param {number} cookbookId
-   * @returns {Promise<IRecipe>}
+   * @returns {Promise<IRecipeRecord>}
    */
-  async getRecipe(cookbookId: number): Promise<IRecipe> {
+  async getRecipe(cookbookId: number): Promise<IRecipeRecord> {
     // TODO: This should also get the ingredients
     return this.repository.getRecipeById(cookbookId);
   }
@@ -33,9 +33,9 @@ export class RecipeService implements DBService {
    *
    * @async
    * @param {number} cookbookId
-   * @returns {Promise<IRecipe[]>}
+   * @returns {Promise<IRecipeRecord[]>}
    */
-  async getCookbookRecipes(cookbookId: number): Promise<IRecipe[]> {
+  async getCookbookRecipes(cookbookId: number): Promise<IRecipeRecord[]> {
     return this.repository.getRecipesByCookbookId(cookbookId);
   }
 }

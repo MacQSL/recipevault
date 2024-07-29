@@ -1,20 +1,39 @@
-const apiDoc = {
-  swagger: '2.0',
-  basePath: '/api',
+import { OpenAPIV3 } from 'openapi-types';
+
+const apiDoc: OpenAPIV3.Document = {
+  openapi: '3.0.0',
   info: {
     title: 'RecipeHub API.',
     version: '1.0.0'
   },
-  definitions: {
-    World: {
-      type: 'object',
-      properties: {
-        name: {
-          description: 'The name of this world.',
-          type: 'string'
+  components: {
+    schemas: {
+      Error: {
+        description: 'Error response object',
+        required: ['name', 'status', 'message'],
+        type: 'object',
+        properties: {
+          name: {
+            type: 'string'
+          },
+          status: {
+            description: 'HTTP response code',
+            type: 'number'
+          },
+          message: {
+            type: 'string'
+          },
+          errors: {
+            type: 'array',
+            items: {}
+          }
         }
-      },
-      required: ['name']
+      }
+    },
+    responses: {
+      default: {
+        $ref: '#/components/schemas/Error'
+      }
     }
   },
   paths: {}

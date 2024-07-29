@@ -1,3 +1,4 @@
+import { ICookbookRecord, ICookbookWithRecipes } from '../../repositories/cookbook/cookbook-repository.interface.js';
 import { CookbookRepository } from '../../repositories/cookbook/cookbook-repository.js';
 import { Connection } from '../../utils/database.js';
 import { DBService } from '../db-service.js';
@@ -19,7 +20,32 @@ export class CookbookService implements DBService {
     this.recipeService = new RecipeService(connection);
   }
 
-  async getUserCookbooks(userId: number) {
+  /**
+   * Get a cookbook with recipes.
+   *
+   * Note: Recipes do not contain ingredients.
+   *
+   * @async
+   * @param {number} cookbookId
+   * @returns {Promise<ICookbookWithRecipes>} Cookbook and stub recipes
+   */
+  async getCookbookWithRecipes(cookbookId: number): Promise<ICookbookWithRecipes> {
+    const [cookbook, recipes] = await Promise.all([
+      this.repository.getCookbookById(cookbookId),
+      this.recipeService.getCookbookRecipes(cookbookId)
+    ]);
+
+    return { ...cookbook, recipes };
+  }
+
+  /**
+   * Get all user cookbooks.
+   *
+   * @async
+   * @param {number} userId
+   * @returns {Promise<ICookbookRecord>}
+   */
+  async getUserCookbooks(userId: number): Promise<ICookbookRecord[]> {
     return this.repository.getCookbooksByUserId(userId);
   }
 }

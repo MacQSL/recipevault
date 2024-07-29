@@ -1,4 +1,4 @@
-export interface IRecipe {
+export interface IRecipeRecord {
   recipe_id: number;
   cookbook_id: number;
   name: string;
