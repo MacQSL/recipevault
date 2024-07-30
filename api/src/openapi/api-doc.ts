@@ -1,4 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
+import { errorSchema } from './schemas/error.js';
 
 const apiDoc: OpenAPIV3.Document = {
   openapi: '3.0.0',
@@ -8,31 +9,18 @@ const apiDoc: OpenAPIV3.Document = {
   },
   components: {
     schemas: {
-      Error: {
-        description: 'Error response object',
-        required: ['name', 'status', 'message'],
-        type: 'object',
-        properties: {
-          name: {
-            type: 'string'
-          },
-          status: {
-            description: 'HTTP response code',
-            type: 'number'
-          },
-          message: {
-            type: 'string'
-          },
-          errors: {
-            type: 'array',
-            items: {}
-          }
-        }
-      }
+      Error: errorSchema
     },
     responses: {
       default: {
-        $ref: '#/components/schemas/Error'
+        description: 'Error response',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/Error'
+            }
+          }
+        }
       }
     }
   },
