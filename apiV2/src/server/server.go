@@ -9,7 +9,8 @@ import (
 	"recipehub/api/src/handler"
 )
 
-var PORT = os.Getenv("API_PORT")
+// Environment variables
+var PORT = ":" + os.Getenv("API_PORT")
 
 // Add routes and inject dependencies to handlers
 func addRoutes(router *http.ServeMux, connection *sql.DB) {
@@ -19,6 +20,7 @@ func addRoutes(router *http.ServeMux, connection *sql.DB) {
 // Creates a new router, adds routes and applies middleware
 func newRouter() *http.ServeMux {
 	router := http.NewServeMux()
+
 	connection := NewDBConnection()
 
 	addRoutes(router, connection)
@@ -28,7 +30,7 @@ func newRouter() *http.ServeMux {
 	return router
 }
 
-// Start server
+// Start http server
 func Start() {
 	router := newRouter()
 
