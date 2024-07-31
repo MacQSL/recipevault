@@ -11,7 +11,7 @@ COPY . ./
 RUN go get -d -v
 
 # Build the binary.
-RUN CGO_ENABLED=0 go build -o /server
+RUN CGO_ENABLED=0 go build -o /api-executable
 
 
 ############################
@@ -20,8 +20,7 @@ RUN CGO_ENABLED=0 go build -o /server
 FROM scratch
 
 # Copy our static executable.
-COPY --from=build /server /server
+COPY --from=build /api-executable /api-executable
 
 # Run the main binary.
-ENTRYPOINT ["/server"]
-
+ENTRYPOINT ["/api-executable"]

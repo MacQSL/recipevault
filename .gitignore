@@ -3,3 +3,4 @@ build/
 .env
 .npm/
 .bash_history
+bin
