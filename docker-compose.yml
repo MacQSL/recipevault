@@ -55,22 +55,23 @@ services:
       image: ${DOCKER_PROJECT_NAME}-api-img
       container_name: ${DOCKER_PROJECT_NAME}-api-container
       build:
-        context: ./api
-        dockerfile: ./.docker/Dockerfile.api
+        context: ./apiV2
+        dockerfile: ./.docker/Dockerfile.api.dev
+      ports:
+        - ${API_PORT}:${API_PORT}
       environment:
         - NODE_ENV=${NODE_ENV}
+        - API_PORT=${API_PORT}
         - DB_HOST=${DB_HOST}
         - DB_PORT=${DB_PORT}
         - DB_DATABASE=${DB_DATABASE}
         - DB_USER_API=${DB_USER_API}
         - DB_USER_API_PASSWORD=${DB_USER_API_PASSWORD}
-        - API_PORT=${API_PORT}
       volumes:
-        - ./api:/opt/api
-        - /opt/api/node_modules # prevents local node_modules overriding container node_modules
+        - ./apiV2:/opt/api
       networks:
         - recipehub-network
-      command: ['npm', 'run', 'dev']
+      command: 'air --build.cmd "go build -o bin/api" --build.bin "./bin/api"'
 
 networks:
   recipehub-network:

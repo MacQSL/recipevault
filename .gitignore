@@ -2,3 +2,6 @@ node_modules/
 build/
 .env
 .npm/
+.bash_history
+bin
+tmp/
