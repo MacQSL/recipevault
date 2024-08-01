@@ -15,6 +15,7 @@ func NewCookbookRepository(db *sql.DB) *CookbookRepository {
 	}
 }
 
+// Get Cookbooks by User ID - Includes associated recipes
 func (r *CookbookRepository) GetCookbooksByUserID(userID int) ([]model.CookbookRecipes, error) {
 
 	rows, err := r.db.Query(`
