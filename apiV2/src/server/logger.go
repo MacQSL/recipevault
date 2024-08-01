@@ -25,27 +25,32 @@ type Logger struct {
 }
 
 // Create new Logger
+//
+// Log level determines which logs will show
+// ie: Setting DEBUG will render all log levels
 func NewLogger(logger *log.Logger) *Logger {
 	return &Logger{
-		levelMap: map[string]Level{"DEBUG": 0, "INFO": 1, "WARN": 2, "ERROR": 3},
-		debug:    log.New(os.Stdout, "DEBUG: ", log.LstdFlags),
-		info:     log.New(os.Stdout, "INFO: ", log.LstdFlags),
-		warn:     log.New(os.Stdout, "WARN: ", log.LstdFlags),
+		level:    0,
+		levelMap: map[string]Level{"ERROR": 0, "WARN": 1, "INFO": 2, "DEBUG": 3},
 		error:    log.New(os.Stdout, "ERROR: ", log.LstdFlags),
+		warn:     log.New(os.Stdout, "WARN: ", log.LstdFlags),
+		info:     log.New(os.Stdout, "INFO: ", log.LstdFlags),
+		debug:    log.New(os.Stdout, "DEBUG: ", log.LstdFlags),
 	}
 }
 
 // Set log level - renders all logs below level aswell
-func (l *Logger) SetLogLevel(level string) {
+// Excluding error logs which always render
+func (l *Logger) setLogLevel(level string) {
 	newLevel, ok := l.levelMap[level]
 
 	if ok {
-		l.debug.Println("Setting log level to: %s", level)
+		l.info.Printf("Setting log level to: %s\n", level)
 		l.level = newLevel
 		return
 	}
 
-	l.debug.Println("Log level not supported: ", level)
+	l.warn.Printf("Log level not supported: %s\n", level)
 }
 
 // Debug logs for development
@@ -69,9 +74,9 @@ func (l *Logger) Warn(v ...interface{}) {
 	}
 }
 
-// Error logs
+// Error logs - always
 func (l *Logger) Error(v ...interface{}) {
-	if l.level == l.levelMap["ERROR"] {
+	if l.level >= l.levelMap["ERROR"] {
 		l.error.Println(v...)
 	}
 }
