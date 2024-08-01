@@ -1,4 +1,4 @@
-package server
+package util
 
 import (
 	"log"
@@ -37,6 +37,17 @@ func NewLogger(logger *log.Logger) *Logger {
 		info:     log.New(os.Stdout, "INFO: ", log.LstdFlags),
 		debug:    log.New(os.Stdout, "DEBUG: ", log.LstdFlags),
 	}
+}
+
+// Update the log level
+func UpdateLogLevel(l *Logger, level string) {
+	newLevel, ok := l.levelMap[level]
+	if ok {
+		l.Info("Setting log level to: ", level)
+		l.level = newLevel
+		return
+	}
+	l.Warn("Log level not supported: ", level)
 }
 
 // Set log level - renders all logs below level aswell

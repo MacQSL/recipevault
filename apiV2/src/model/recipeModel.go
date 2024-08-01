@@ -1,7 +1,8 @@
 package model
 
+// Recipe record omitting audit columns
 type RecipeRecord struct {
-	recipe_id   int
-	name        string
-	description string
+	Recipe_id   int    `json:"recipe_id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }

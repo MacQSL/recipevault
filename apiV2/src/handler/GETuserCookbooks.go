@@ -6,7 +6,6 @@ import (
 )
 
 // Get all cookbooks for a user
-func UserCookbooks(res http.ResponseWriter, req *http.Request) {
-	//var connection = database.Connect()
+func GETuserCookbooks(res http.ResponseWriter, req *http.Request) {
 	io.WriteString(res, "cookbooks")
 }

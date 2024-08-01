@@ -5,15 +5,20 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"recipehub/api/src/util"
 )
 
 var PORT = ":" + os.Getenv("API_PORT")
 
 // Start http server
-func Start() {
-	log := NewLogger(&log.Logger{})
+func Run() {
+	log := util.NewLogger(&log.Logger{})
+	util.UpdateLogLevel(log, "DEBUG")
+
 	mux := http.NewServeMux()
+
 	db := SetupDatabase()
+
 	router := NewRouter(mux, log, db)
 
 	server := http.Server{
@@ -21,7 +26,6 @@ func Start() {
 		Handler: router,
 	}
 
-	log.setLogLevel("DEBUG")
 	log.Info("Starting server on port", PORT)
 
 	err := server.ListenAndServe()
