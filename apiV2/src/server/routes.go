@@ -4,20 +4,27 @@ import (
 	"database/sql"
 	"net/http"
 	"recipehub/api/src/handler"
+	"recipehub/api/src/middleware"
 )
 
 // Add routes and inject dependencies to handlers
 func addRoutes(router *http.ServeMux, db *sql.DB) {
-	router.HandleFunc("GET /api", handler.Root)
+	router.HandleFunc("GET /health", handler.Root)
 }
 
 // Creates a new router, adds routes and applies middleware
-func NewRouter(db *sql.DB) *http.ServeMux {
-	router := http.NewServeMux()
+func NewRouter(db *sql.DB) http.Handler {
+	mux := http.NewServeMux()
 
-	addRoutes(router, db)
+	// Prepend `/api/` to all routes
+	mux.Handle("/api/", http.StripPrefix("/api", mux))
 
-	//router = someMiddleware(handler)
+	addRoutes(mux, db)
+
+	var router http.Handler = mux
+
+	// Apply middleware to all routes
+	router = middleware.Logger(router)
 
 	return router
 }
