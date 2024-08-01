@@ -8,14 +8,14 @@ import (
 )
 
 // Add routes and inject dependencies to handlers
-func addRoutes(router *http.ServeMux, db *sql.DB) {
-	router.HandleFunc("GET /health", handler.Root)
+func addRoutes(mux *http.ServeMux, db *sql.DB) {
+	mux.HandleFunc("GET /health", handler.Health)
+
+	mux.HandleFunc("/", http.NotFound)
 }
 
 // Creates a new router, adds routes and applies middleware
-func NewRouter(db *sql.DB) http.Handler {
-	mux := http.NewServeMux()
-
+func NewRouter(mux *http.ServeMux, db *sql.DB) http.Handler {
 	// Prepend `/api/` to all routes
 	mux.Handle("/api/", http.StripPrefix("/api", mux))
 

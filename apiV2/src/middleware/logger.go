@@ -16,7 +16,7 @@ func (w *wrappedResponseWriter) WriteHeader(statusCode int) {
 	w.statusCode = statusCode
 }
 
-// Logs incoming requests ie: 200 GET /api/endpoint 10
+// Logs incoming requests ie: 200 GET /api/path 10
 func Logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
@@ -28,6 +28,7 @@ func Logger(next http.Handler) http.Handler {
 			}
 
 			next.ServeHTTP(wrapped, r)
+
 			log.Println(wrapped.statusCode, r.Method, r.URL.Path, time.Since(start))
 		},
 	)

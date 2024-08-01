@@ -6,6 +6,6 @@ import (
 )
 
 // Welcome to RecipeHub endpoint
-func Root(res http.ResponseWriter, req *http.Request) {
-	io.WriteString(res, "Welcome to RecipeHub API.")
+func Health(res http.ResponseWriter, req *http.Request) {
+	io.WriteString(res, "RecipeHub Healthy 🍔")
 }

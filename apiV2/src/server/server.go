@@ -11,8 +11,10 @@ var PORT = ":" + os.Getenv("API_PORT")
 
 // Start http server
 func Start() {
+	mux := http.NewServeMux()
 	db := SetupDatabase()
-	router := NewRouter(db)
+
+	router := NewRouter(mux, db)
 
 	server := http.Server{
 		Addr:    PORT,
