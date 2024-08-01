@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"recipehub/api/src/service"
 )
 
 var PORT = ":" + os.Getenv("API_PORT")
