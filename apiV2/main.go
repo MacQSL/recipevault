@@ -1,7 +1,7 @@
 package main
 
 import (
-	"recipehub/api/src/server"
+	"recipevault/api/src/server"
 
 	_ "github.com/lib/pq"
 )

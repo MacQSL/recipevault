@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// Welcome to RecipeHub endpoint
+// Welcome to RecipeVault endpoint
 func HandleHealth(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "RecipeHub Healthy 🍔")
+	io.WriteString(w, "RecipeVault Healthy 🍔")
 }

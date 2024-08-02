@@ -3,7 +3,7 @@ package server
 import (
 	"database/sql"
 	"fmt"
-	"recipehub/api/src/util"
+	"recipevault/api/src/util"
 )
 
 // Get formatted database connection string

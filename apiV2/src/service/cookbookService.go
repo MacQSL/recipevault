@@ -1,9 +1,9 @@
 package service
 
 import (
-	"recipehub/api/src/model"
-	"recipehub/api/src/repository"
-	"recipehub/api/src/util"
+	"recipevault/api/src/model"
+	"recipevault/api/src/repository"
+	"recipevault/api/src/util"
 )
 
 type CookbookService struct {

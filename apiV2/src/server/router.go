@@ -3,8 +3,8 @@ package server
 import (
 	"database/sql"
 	"net/http"
-	"recipehub/api/src/handler"
-	"recipehub/api/src/util"
+	"recipevault/api/src/handler"
+	"recipevault/api/src/util"
 )
 
 // Add routes and inject dependencies to handlers

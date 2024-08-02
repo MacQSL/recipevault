@@ -23,7 +23,7 @@ func NewConfig() *Config {
 		DB_PORT:     getEnv("DB_PORT", "8765"),
 		DB_USER:     getEnv("DB_USER_API", "apiuser"),
 		DB_PASSWORD: getEnv("DB_USER_API_PASSWORD", "apiuser"),
-		DB_DATABASE: getEnv("DB_DATABASE", "recipehub"),
+		DB_DATABASE: getEnv("DB_DATABASE", "recipevault"),
 	}
 }
 

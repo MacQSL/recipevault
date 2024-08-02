@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"recipehub/api/src/util"
+	"recipevault/api/src/util"
 )
 
 // Collection of handler related utils

@@ -3,9 +3,9 @@ package handler
 import (
 	"database/sql"
 	"net/http"
-	"recipehub/api/src/repository"
-	"recipehub/api/src/service"
-	"recipehub/api/src/util"
+	"recipevault/api/src/repository"
+	"recipevault/api/src/service"
+	"recipevault/api/src/util"
 )
 
 // Get all user cookbooks

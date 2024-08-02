@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 	"net/http"
-	"recipehub/api/src/util"
+	"recipevault/api/src/util"
 )
 
 func AuthMiddleware(log util.ILogger) func(http.Handler) http.Handler {
