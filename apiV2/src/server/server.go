@@ -7,23 +7,27 @@ import (
 	"recipehub/api/src/util"
 )
 
-var PORT = ":" + os.Getenv("API_PORT")
-
-// Start http server
+// Run http server
 func Run() {
-	mux := http.NewServeMux()
-	db := ConnectDB()
+	// API dependencies
 	log := util.NewLogger(&log.Logger{})
-	log.SetLogLevel("DEBUG")
-
+	mux := http.NewServeMux()
+	db := ConnectDB(log)
 	router := NewRouter(mux, log, db)
 
+	port, ok := os.LookupEnv("API_PORT")
+
+	if !ok {
+		log.Error("Missing API_PORT")
+		os.Exit(1)
+	}
+
 	server := http.Server{
-		Addr:    PORT,
+		Addr:    ":" + port,
 		Handler: router,
 	}
 
-	log.Info("Starting server on port", PORT)
+	log.Info("Starting server on port", port)
 
 	err := server.ListenAndServe()
 

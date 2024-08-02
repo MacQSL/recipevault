@@ -8,7 +8,7 @@ import (
 	"recipehub/api/src/util"
 )
 
-func HandleUserCookbooks(log *util.Logger, db *sql.DB) http.HandlerFunc {
+func HandleUserCookbooks(log util.ILogger, db *sql.DB) http.HandlerFunc {
 	repository := repository.NewCookbookRepository(db)
 	service := service.NewCookbookService(repository)
 

@@ -10,10 +10,18 @@ import (
 const (
 	reset = "\033[0m"
 	error = "\033[31m" + "ERROR: " + reset
-	warn  = "\033[33m" + "WARN!: " + reset
-	info  = "\033[34m" + "INFO!: " + reset
+	warn  = "\033[33m" + "WARN: " + reset
+	info  = "\033[34m" + "INFO: " + reset
 	debug = "\033[36m" + "DEBUG: " + reset
 )
+
+// Interface to hide implementation away from client
+type ILogger interface {
+	Error(v ...interface{})
+	Warn(v ...interface{})
+	Info(v ...interface{})
+	Debug(v ...interface{})
+}
 
 // Logging level as integer
 type Level int
@@ -27,12 +35,10 @@ type Logger struct {
 	error    *log.Logger
 }
 
-/*
-Create new logger
-
-Log level determines which logs will show
-ie: Setting DEBUG will render all log levels
-*/
+// Create new logger
+//
+// Log level determines which logs will show
+// ie: Setting DEBUG will render all log levels
 func NewLogger(logger *log.Logger) *Logger {
 	return &Logger{
 		level:    3,
