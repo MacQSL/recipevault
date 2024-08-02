@@ -2,7 +2,7 @@ package server
 
 import (
 	"net/http"
-	"recipehub/api/src/util"
+	"recipevault/api/src/util"
 	"time"
 )
 
@@ -17,7 +17,7 @@ func (w *wrappedResponseWriter) WriteHeader(statusCode int) {
 }
 
 // Logs incoming requests ie: 200 GET /api/path 10
-func LoggerMiddleware(log *util.Logger) func(http.Handler) http.Handler {
+func LoggerMiddleware(log util.ILogger) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {
 			start := time.Now()

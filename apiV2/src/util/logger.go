@@ -5,69 +5,89 @@ import (
 	"os"
 )
 
+// Coloured labels
+// https://www.dolthub.com/blog/2024-02-23-colors-in-golang/
+const (
+	resetTag = "\033[0m"
+	fatalTag = "\033[35m" + "FATAL: " + resetTag
+	errorTag = "\033[31m" + "ERROR: " + resetTag
+	warnTag  = "\033[33m" + "WARN: " + resetTag
+	infoTag  = "\033[34m" + "INFO: " + resetTag
+	debugTag = "\033[36m" + "DEBUG: " + resetTag
+)
+
+// Custom API logger
+type ILogger interface {
+	Fatal(v ...interface{})
+	Error(v ...interface{})
+	Warn(v ...interface{})
+	Info(v ...interface{})
+	Debug(v ...interface{})
+}
+
 // Logging level as integer
 type Level int
-
-type ILogger interface {
-	Debug(msg string)
-	Info(msg string)
-	Warn(msg string)
-	Error(msg string)
-}
 
 type Logger struct {
 	level    Level
 	levelMap map[string]Level
-	debug    *log.Logger
-	info     *log.Logger
-	warn     *log.Logger
+	fatal    *log.Logger
 	error    *log.Logger
+	warn     *log.Logger
+	info     *log.Logger
+	debug    *log.Logger
 }
 
-// Create new Logger
+// Create new logger
 //
 // Log level determines which logs will show
 // ie: Setting DEBUG will render all log levels
-func NewLogger(logger *log.Logger) *Logger {
+func NewLogger() *Logger {
 	return &Logger{
-		level:    0,
-		levelMap: map[string]Level{"ERROR": 0, "WARN": 1, "INFO": 2, "DEBUG": 3},
-		error:    log.New(os.Stdout, "ERROR: ", log.LstdFlags),
-		warn:     log.New(os.Stdout, "WARN: ", log.LstdFlags),
-		info:     log.New(os.Stdout, "INFO: ", log.LstdFlags),
-		debug:    log.New(os.Stdout, "DEBUG: ", log.LstdFlags),
+		level:    3,
+		levelMap: map[string]Level{"FATAL": 0, "ERROR": 1, "WARN": 2, "INFO": 3, "DEBUG": 4},
+		fatal:    log.New(os.Stdout, fatalTag, log.LstdFlags),
+		error:    log.New(os.Stdout, errorTag, log.LstdFlags),
+		warn:     log.New(os.Stdout, warnTag, log.LstdFlags),
+		info:     log.New(os.Stdout, infoTag, log.LstdFlags),
+		debug:    log.New(os.Stdout, debugTag, log.LstdFlags),
 	}
 }
 
-// Update the log level
-func UpdateLogLevel(l *Logger, level string) {
-	newLevel, ok := l.levelMap[level]
-	if ok {
-		l.Info("Setting log level to: ", level)
-		l.level = newLevel
-		return
-	}
-	l.Warn("Log level not supported: ", level)
-}
-
-// Set log level - renders all logs below level aswell
-// Excluding error logs which always render
-func (l *Logger) setLogLevel(level string) {
+// Set the current log level DEBUG | INFO | WARN | ERROR
+func (l *Logger) SetLogLevel(level string) {
 	newLevel, ok := l.levelMap[level]
 
 	if ok {
-		l.info.Printf("Setting log level to: %s\n", level)
+		l.Info("Setting log level to:", level)
 		l.level = newLevel
 		return
 	}
 
-	l.warn.Printf("Log level not supported: %s\n", level)
+	l.Warn("Log level not supported:", level)
 }
 
-// Debug logs for development
-func (l *Logger) Debug(v ...interface{}) {
-	if l.level >= l.levelMap["DEBUG"] {
-		l.debug.Println(v...)
+// Loggers in order of display precedence
+
+// Fatal logs - calls os.exit(1) to kill program
+func (l *Logger) Fatal(v ...interface{}) {
+	if l.level >= l.levelMap["FATAL"] {
+		l.fatal.Println(v...)
+		os.Exit(1)
+	}
+}
+
+// Error logs
+func (l *Logger) Error(v ...interface{}) {
+	if l.level >= l.levelMap["ERROR"] {
+		l.error.Println(v...)
+	}
+}
+
+// Warn logs for potential errors
+func (l *Logger) Warn(v ...interface{}) {
+	if l.level >= l.levelMap["WARN"] {
+		l.warn.Println(v...)
 	}
 }
 
@@ -78,16 +98,9 @@ func (l *Logger) Info(v ...interface{}) {
 	}
 }
 
-// Warn logs for potential errors
-func (l *Logger) Warn(v ...interface{}) {
-	if l.level >= l.levelMap["WARN"] {
-		l.info.Println(v...)
-	}
-}
-
-// Error logs - always
-func (l *Logger) Error(v ...interface{}) {
-	if l.level >= l.levelMap["ERROR"] {
-		l.error.Println(v...)
+// Debug logs for development
+func (l *Logger) Debug(v ...interface{}) {
+	if l.level >= l.levelMap["DEBUG"] {
+		l.debug.Println(v...)
 	}
 }

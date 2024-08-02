@@ -1,7 +1,7 @@
 {
-  "name": "recipehub-api",
+  "name": "recipevault-api",
   "version": "1.0.0",
-  "description": "API for recipehub application.",
+  "description": "API for recipevault application.",
   "author": "Mac Deluca",
   "license": "ISC",
   "main": "server.js",

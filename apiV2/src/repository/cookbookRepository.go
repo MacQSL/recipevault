@@ -2,46 +2,58 @@ package repository
 
 import (
 	"database/sql"
-	"recipehub/api/src/model"
+	"recipevault/api/src/model"
+	"recipevault/api/src/util"
 )
 
 type CookbookRepository struct {
-	db *sql.DB
+	log util.ILogger
+	db  *sql.DB
 }
 
-func NewCookbookRepository(db *sql.DB) *CookbookRepository {
+func NewCookbookRepository(log util.ILogger, db *sql.DB) *CookbookRepository {
 	return &CookbookRepository{
-		db: db,
+		log: log,
+		db:  db,
 	}
 }
 
-// Get Cookbooks by User ID - Includes associated recipes
-func (r *CookbookRepository) GetCookbooksByUserID(userID int) ([]model.CookbookRecipes, error) {
+// Scan rows into cookbooks
+func scanCookbooks(rows *sql.Rows) ([]model.Cookbook, error) {
+	defer rows.Close()
 
-	rows, err := r.db.Query(`
-    SELECT c.*
-    FROM cookbook c
-    JOIN user u
-    ON c.user_id = ?;
-    `, userID)
-
-	if err != nil {
-		return nil, err
-	}
-
-	cookbooks := []model.CookbookRecipes{}
-
+	cookbooks := []model.Cookbook{}
 	for rows.Next() {
-		c := model.CookbookRecipes{}
-
-		err := rows.Scan(&c.Cookbook_id, &c.Name, &c.Recipes, &c.Description)
-
+		c := model.Cookbook{}
+		err := rows.Scan(&c.Cookbook_id, &c.Name, &c.Description)
 		if err != nil {
 			return nil, err
 		}
-
 		cookbooks = append(cookbooks, c)
 	}
 
 	return cookbooks, nil
+}
+
+// Get Cookbooks by User ID
+func (r *CookbookRepository) GetCookbooksByUserID(userID int) ([]model.Cookbook, error) {
+
+	rows, err := r.db.Query(`
+    SELECT
+      c.cookbook_id,
+      c.name,
+      c.description
+    FROM cookbook c
+    INNER JOIN user_cookbook u
+    ON c.cookbook_id = u.cookbook_id
+    WHERE u.user_id = $1;`, userID)
+
+	if err != nil {
+		r.log.Error("CookbookRepository->GetCookbooksByUserID", err)
+		return nil, err
+	}
+
+	data, err := scanCookbooks(rows)
+
+	return data, err
 }

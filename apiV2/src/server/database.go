@@ -3,35 +3,31 @@ package server
 import (
 	"database/sql"
 	"fmt"
-	"os"
+	"recipevault/api/src/util"
 )
 
-var (
-	host     = os.Getenv("DB_HOST")
-	port     = os.Getenv("DB_PORT")
-	user     = os.Getenv("DB_USER_API")
-	password = os.Getenv("DB_USER_API_PASSWORD")
-	database = os.Getenv("DB_DATABASE")
-)
-
-func SetupDatabase() *sql.DB {
-	psqlInfo := fmt.Sprintf(`
+// Get formatted database connection string
+func getDBConnectionString(c *util.Config) string {
+	return fmt.Sprintf(`
     host=%s port=%s user=%s password=%s dbname=%s sslmode=disable`,
-		host, port, user, password, database)
+		c.DB_HOST, c.DB_PORT, c.DB_USER, c.DB_PASSWORD, c.DB_DATABASE)
+}
 
-	db, err := sql.Open("postgres", psqlInfo)
+// Connect to the database - panic if unsuccessfull
+func ConnectDB(log util.ILogger, c *util.Config) *sql.DB {
+	db, err := sql.Open("postgres", getDBConnectionString(c))
 
 	if err != nil {
-		panic(err)
+		log.Fatal("Unable to connect to database")
 	}
-
-	defer db.Close()
 
 	err = db.Ping()
 
 	if err != nil {
-		panic(err)
+		log.Fatal("Unable to ping database")
 	}
+
+	log.Info("DB connected")
 
 	return db
 }
