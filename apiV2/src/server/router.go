@@ -17,20 +17,18 @@ func addRoutes(mux *http.ServeMux, log util.ILogger, db *sql.DB) {
 
 // Creates a new router, adds routes and applies middleware
 func NewRouter(mux *http.ServeMux, log util.ILogger, db *sql.DB) http.Handler {
-	// Prepend `/api/` to all routes
-	mux.Handle("/api/", http.StripPrefix("/api", mux))
+	mux.Handle("/api/", http.StripPrefix("/api", mux)) // prepend /api/
 
 	addRoutes(mux, log, db)
 
 	var router http.Handler = mux
 
 	// Generate middleware
-	logMiddleware := LoggerMiddleware(log) // inject custom logger
-
-	log.Debug("Middleware applied")
+	logMiddleware := LoggerMiddleware(log)
 
 	// Apply middleware to ALL routes
 	router = logMiddleware(router)
+	router = HeadersMiddleware(router)
 
 	return router
 }

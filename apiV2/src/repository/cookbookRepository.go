@@ -3,15 +3,18 @@ package repository
 import (
 	"database/sql"
 	"recipehub/api/src/model"
+	"recipehub/api/src/util"
 )
 
 type CookbookRepository struct {
-	db *sql.DB
+	log util.ILogger
+	db  *sql.DB
 }
 
-func NewCookbookRepository(db *sql.DB) *CookbookRepository {
+func NewCookbookRepository(log util.ILogger, db *sql.DB) *CookbookRepository {
 	return &CookbookRepository{
-		db: db,
+		log: log,
+		db:  db,
 	}
 }
 

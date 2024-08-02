@@ -1,18 +1,19 @@
 package service
 
-import "recipehub/api/src/model"
-
-type ICookbookRepository interface {
-	GetCookbooksByUserID(userID int) ([]model.Cookbook, error)
-}
+import (
+	"recipehub/api/src/model"
+	"recipehub/api/src/repository"
+	"recipehub/api/src/util"
+)
 
 type CookbookService struct {
-	repository ICookbookRepository
+	log        util.ILogger
+	repository *repository.CookbookRepository
 }
 
-func NewCookbookService(repository ICookbookRepository) *CookbookService {
+func NewCookbookService(log util.ILogger, repo *repository.CookbookRepository) *CookbookService {
 	return &CookbookService{
-		repository: repository,
+		repository: repo,
 	}
 }
 

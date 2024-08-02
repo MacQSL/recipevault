@@ -1,11 +1,11 @@
 package util
 
 import (
-	"fmt"
 	"os"
 )
 
 type Config struct {
+	APIPort    string
 	DBHost     string
 	DBPort     string
 	DBUser     string
@@ -16,8 +16,9 @@ type Config struct {
 // Create a new ENV config
 func NewConfig() *Config {
 	return &Config{
+		APIPort:    getEnv("API_PORT", "8000"),
 		DBHost:     getEnv("DB_HOST", "localhost"),
-		DBPort:     getEnv("DB_PORT", "8000"),
+		DBPort:     getEnv("DB_PORT", "8765"),
 		DBUser:     getEnv("DB_USER_API", "apiuser"),
 		DBPassword: getEnv("DB_USER_API_PASSWORD", "apiuser"),
 		DBDatabase: getEnv("DB_DATABASE", "recipehub"),
@@ -31,11 +32,4 @@ func getEnv(env string, fallback string) string {
 		return fallback
 	}
 	return val
-}
-
-// Get formatted database connection string
-func (c *Config) GetDBConnectionString() string {
-	return fmt.Sprintf(`
-    host=%s port=%s user=%s password=%s dbname=%s sslmode=disable`,
-		c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBDatabase)
 }

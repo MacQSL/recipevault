@@ -42,7 +42,7 @@ type Logger struct {
 //
 // Log level determines which logs will show
 // ie: Setting DEBUG will render all log levels
-func NewLogger(logger *log.Logger) *Logger {
+func NewLogger() *Logger {
 	return &Logger{
 		level:    3,
 		levelMap: map[string]Level{"FATAL": 0, "ERROR": 1, "WARN": 2, "INFO": 3, "DEBUG": 4},
