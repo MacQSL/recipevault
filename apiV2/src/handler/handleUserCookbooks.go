@@ -14,14 +14,17 @@ func HandleUserCookbooks(log util.ILogger, db *sql.DB) http.HandlerFunc {
 	service := service.NewCookbookService(log, repository)
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		userID := util.GetUserID(r)
+		userID := getUserID(r)
 
 		data, err := service.GetUserCookbooks(userID)
 
 		if err != nil {
 			log.Warn(err)
+			w.WriteHeader(http.StatusInternalServerError)
 		}
 
-		log.Info(data)
+		err = encode(w, data)
+
+		w.WriteHeader(http.StatusOK)
 	}
 }

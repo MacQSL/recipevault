@@ -13,7 +13,7 @@ func AuthMiddleware(log util.ILogger) func(http.Handler) http.Handler {
 			// Place logic for decoding token here
 			userID := 2
 
-			ctx := context.WithValue(r.Context(), "userID", userID)
+			ctx := context.WithValue(r.Context(), util.CTX_USER_ID, userID)
 
 			next.ServeHTTP(w, r.WithContext(ctx))
 		}

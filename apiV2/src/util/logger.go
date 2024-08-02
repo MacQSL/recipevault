@@ -8,12 +8,12 @@ import (
 // Coloured labels
 // https://www.dolthub.com/blog/2024-02-23-colors-in-golang/
 const (
-	reset = "\033[0m"
-	fatal = "\033[35m" + "FATAL: " + reset
-	error = "\033[31m" + "ERROR: " + reset
-	warn  = "\033[33m" + "WARN: " + reset
-	info  = "\033[34m" + "INFO: " + reset
-	debug = "\033[36m" + "DEBUG: " + reset
+	resetTag = "\033[0m"
+	fatalTag = "\033[35m" + "FATAL: " + resetTag
+	errorTag = "\033[31m" + "ERROR: " + resetTag
+	warnTag  = "\033[33m" + "WARN: " + resetTag
+	infoTag  = "\033[34m" + "INFO: " + resetTag
+	debugTag = "\033[36m" + "DEBUG: " + resetTag
 )
 
 // Custom API logger
@@ -46,11 +46,11 @@ func NewLogger() *Logger {
 	return &Logger{
 		level:    3,
 		levelMap: map[string]Level{"FATAL": 0, "ERROR": 1, "WARN": 2, "INFO": 3, "DEBUG": 4},
-		fatal:    log.New(os.Stdout, fatal, log.LstdFlags),
-		error:    log.New(os.Stdout, error, log.LstdFlags),
-		warn:     log.New(os.Stdout, warn, log.LstdFlags),
-		info:     log.New(os.Stdout, info, log.LstdFlags),
-		debug:    log.New(os.Stdout, debug, log.LstdFlags),
+		fatal:    log.New(os.Stdout, fatalTag, log.LstdFlags),
+		error:    log.New(os.Stdout, errorTag, log.LstdFlags),
+		warn:     log.New(os.Stdout, warnTag, log.LstdFlags),
+		info:     log.New(os.Stdout, infoTag, log.LstdFlags),
+		debug:    log.New(os.Stdout, debugTag, log.LstdFlags),
 	}
 }
 

@@ -49,6 +49,7 @@ func (r *CookbookRepository) GetCookbooksByUserID(userID int) ([]model.Cookbook,
     WHERE u.user_id = $1;`, userID)
 
 	if err != nil {
+		r.log.Error("CookbookRepository->GetCookbooksByUserID", err)
 		return nil, err
 	}
 
