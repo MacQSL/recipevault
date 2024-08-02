@@ -3,7 +3,7 @@ package service
 import "recipehub/api/src/model"
 
 type ICookbookRepository interface {
-	GetCookbooksByUserID(userID int) ([]model.CookbookRecipes, error)
+	GetCookbooksByUserID(userID int) ([]model.Cookbook, error)
 }
 
 type CookbookService struct {
@@ -16,6 +16,6 @@ func NewCookbookService(repository ICookbookRepository) *CookbookService {
 	}
 }
 
-func (s *CookbookService) GetUserCookbooks(userID int) ([]model.CookbookRecipes, error) {
+func (s *CookbookService) GetUserCookbooks(userID int) ([]model.Cookbook, error) {
 	return s.repository.GetCookbooksByUserID(userID)
 }

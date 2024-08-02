@@ -25,7 +25,7 @@ func SetupDatabase() *sql.DB {
 		panic(err)
 	}
 
-	defer db.Close()
+	//defer db.Close()
 
 	err = db.Ping()
 

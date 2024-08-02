@@ -9,7 +9,8 @@ import (
 
 // Add routes and inject dependencies to handlers
 func addRoutes(mux *http.ServeMux, log *util.Logger, db *sql.DB) {
-	mux.HandleFunc("GET /health", handler.Health)
+	mux.HandleFunc("GET /health", handler.HandleHealth)
+	mux.HandleFunc("GET /cookbooks", handler.HandleUserCookbooks(log, db))
 
 	mux.HandleFunc("/", http.NotFound)
 }
