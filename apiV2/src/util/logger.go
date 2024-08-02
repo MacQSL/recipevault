@@ -15,7 +15,7 @@ const (
 	debug = "\033[36m" + "DEBUG: " + reset
 )
 
-// Interface to hide implementation away from client
+// Custom API logger
 type ILogger interface {
 	Error(v ...interface{})
 	Warn(v ...interface{})
