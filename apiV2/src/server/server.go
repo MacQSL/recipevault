@@ -3,36 +3,28 @@ package server
 import (
 	"log"
 	"net/http"
-	"os"
 	"recipehub/api/src/util"
 )
 
 // Run http server
 func Run() {
-	// API dependencies
 	log := util.NewLogger(&log.Logger{})
+	conf := util.NewConfig()
+
 	mux := http.NewServeMux()
-	db := ConnectDB(log)
+	db := ConnectDB(log, conf.GetDBConnectionString())
 	router := NewRouter(mux, log, db)
 
-	port, ok := os.LookupEnv("API_PORT")
-
-	if !ok {
-		log.Error("Missing API_PORT")
-		os.Exit(1)
-	}
-
 	server := http.Server{
-		Addr:    ":" + port,
+		Addr:    ":" + conf.DBPort,
 		Handler: router,
 	}
 
-	log.Info("Starting server on port", port)
+	log.Info("Starting server on port", conf.DBPort)
 
 	err := server.ListenAndServe()
 
 	if err != nil {
-		log.Error("Error starting server:", err)
-		os.Exit(1)
+		log.Fatal("Error starting server:", err)
 	}
 }

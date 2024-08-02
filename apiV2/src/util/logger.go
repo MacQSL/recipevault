@@ -9,6 +9,7 @@ import (
 // https://www.dolthub.com/blog/2024-02-23-colors-in-golang/
 const (
 	reset = "\033[0m"
+	fatal = "\033[35m" + "FATAL: " + reset
 	error = "\033[31m" + "ERROR: " + reset
 	warn  = "\033[33m" + "WARN: " + reset
 	info  = "\033[34m" + "INFO: " + reset
@@ -17,6 +18,7 @@ const (
 
 // Custom API logger
 type ILogger interface {
+	Fatal(v ...interface{})
 	Error(v ...interface{})
 	Warn(v ...interface{})
 	Info(v ...interface{})
@@ -29,10 +31,11 @@ type Level int
 type Logger struct {
 	level    Level
 	levelMap map[string]Level
-	debug    *log.Logger
-	info     *log.Logger
-	warn     *log.Logger
+	fatal    *log.Logger
 	error    *log.Logger
+	warn     *log.Logger
+	info     *log.Logger
+	debug    *log.Logger
 }
 
 // Create new logger
@@ -42,7 +45,8 @@ type Logger struct {
 func NewLogger(logger *log.Logger) *Logger {
 	return &Logger{
 		level:    3,
-		levelMap: map[string]Level{"ERROR": 0, "WARN": 1, "INFO": 2, "DEBUG": 3},
+		levelMap: map[string]Level{"FATAL": 0, "ERROR": 1, "WARN": 2, "INFO": 3, "DEBUG": 4},
+		fatal:    log.New(os.Stdout, fatal, log.LstdFlags),
 		error:    log.New(os.Stdout, error, log.LstdFlags),
 		warn:     log.New(os.Stdout, warn, log.LstdFlags),
 		info:     log.New(os.Stdout, info, log.LstdFlags),
@@ -63,17 +67,20 @@ func (l *Logger) SetLogLevel(level string) {
 	l.Warn("Log level not supported:", level)
 }
 
-// Debug logs for development
-func (l *Logger) Debug(v ...interface{}) {
-	if l.level >= l.levelMap["DEBUG"] {
-		l.debug.Println(v...)
+// Loggers in order of display precedence
+
+// Fatal logs - calls os.exit(1) to kill program
+func (l *Logger) Fatal(v ...interface{}) {
+	if l.level >= l.levelMap["FATAL"] {
+		l.fatal.Println(v...)
+		os.Exit(1)
 	}
 }
 
-// Info logs for additional information
-func (l *Logger) Info(v ...interface{}) {
-	if l.level >= l.levelMap["INFO"] {
-		l.info.Println(v...)
+// Error logs
+func (l *Logger) Error(v ...interface{}) {
+	if l.level >= l.levelMap["ERROR"] {
+		l.error.Println(v...)
 	}
 }
 
@@ -84,9 +91,16 @@ func (l *Logger) Warn(v ...interface{}) {
 	}
 }
 
-// Error logs
-func (l *Logger) Error(v ...interface{}) {
-	if l.level >= l.levelMap["ERROR"] {
-		l.error.Println(v...)
+// Info logs for additional information
+func (l *Logger) Info(v ...interface{}) {
+	if l.level >= l.levelMap["INFO"] {
+		l.info.Println(v...)
+	}
+}
+
+// Debug logs for development
+func (l *Logger) Debug(v ...interface{}) {
+	if l.level >= l.levelMap["DEBUG"] {
+		l.debug.Println(v...)
 	}
 }
