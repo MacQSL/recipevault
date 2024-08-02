@@ -71,6 +71,10 @@ services:
         - ./apiV2:/opt/api
       networks:
         - recipehub-network
+      depends_on:
+        migrations:
+          condition: service_started
+
       command: 'air --build.cmd "go build -o bin/api" --build.bin "./bin/api"'
 
 networks:

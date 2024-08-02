@@ -14,7 +14,7 @@ var (
 	database = os.Getenv("DB_DATABASE")
 )
 
-func SetupDatabase() *sql.DB {
+func ConnectDB() *sql.DB {
 	psqlInfo := fmt.Sprintf(`
     host=%s port=%s user=%s password=%s dbname=%s sslmode=disable`,
 		host, port, user, password, database)

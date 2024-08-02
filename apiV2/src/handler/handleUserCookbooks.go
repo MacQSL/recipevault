@@ -9,11 +9,11 @@ import (
 )
 
 func HandleUserCookbooks(log *util.Logger, db *sql.DB) http.HandlerFunc {
-	cr := repository.NewCookbookRepository(db)
-	cs := service.NewCookbookService(cr)
+	repository := repository.NewCookbookRepository(db)
+	service := service.NewCookbookService(repository)
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		data, err := cs.GetUserCookbooks(2)
+		data, err := service.GetUserCookbooks(2)
 
 		if err != nil {
 			log.Warn(err)

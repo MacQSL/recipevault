@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -12,12 +11,10 @@ var PORT = ":" + os.Getenv("API_PORT")
 
 // Start http server
 func Run() {
-	log := util.NewLogger(&log.Logger{})
-	util.UpdateLogLevel(log, "DEBUG")
-
 	mux := http.NewServeMux()
-
-	db := SetupDatabase()
+	db := ConnectDB()
+	log := util.NewLogger(&log.Logger{})
+	log.SetLogLevel("DEBUG")
 
 	router := NewRouter(mux, log, db)
 
@@ -31,7 +28,7 @@ func Run() {
 	err := server.ListenAndServe()
 
 	if err != nil {
-		fmt.Printf("Error starting server: %s\n", err)
+		log.Error("Error starting server:", err)
 		os.Exit(1)
 	}
 }
