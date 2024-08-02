@@ -4,6 +4,7 @@ import (
 	"net/http"
 )
 
+// Apply headers
 func HeadersMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// CORS headers

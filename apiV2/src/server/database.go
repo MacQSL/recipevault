@@ -10,7 +10,7 @@ import (
 func getDBConnectionString(c *util.Config) string {
 	return fmt.Sprintf(`
     host=%s port=%s user=%s password=%s dbname=%s sslmode=disable`,
-		c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBDatabase)
+		c.DB_HOST, c.DB_PORT, c.DB_USER, c.DB_PASSWORD, c.DB_DATABASE)
 }
 
 // Connect to the database - panic if unsuccessfull

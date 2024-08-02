@@ -16,11 +16,11 @@ func Run() {
 	router := NewRouter(mux, log, db)
 
 	server := http.Server{
-		Addr:    ":" + conf.APIPort,
+		Addr:    ":" + conf.API_PORT,
 		Handler: router,
 	}
 
-	log.Info("Starting server on port", conf.APIPort)
+	log.Info("Starting server on port", conf.API_PORT)
 
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatal("Error starting server:", err)

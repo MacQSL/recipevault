@@ -25,10 +25,12 @@ func NewRouter(mux *http.ServeMux, log util.ILogger, db *sql.DB) http.Handler {
 
 	// Generate middleware
 	logMiddleware := LoggerMiddleware(log)
+	authMiddleware := AuthMiddleware(log)
 
 	// Apply middleware to ALL routes
 	router = logMiddleware(router)
 	router = HeadersMiddleware(router)
+	router = authMiddleware(router)
 
 	return router
 }
