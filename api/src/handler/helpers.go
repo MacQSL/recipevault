@@ -8,7 +8,14 @@ import (
 
 // Get userID from request context - see server/authMiddleware.go
 func getCtxUserID(r *http.Request) int {
-	return r.Context().Value(util.CTX_USER_ID).(int)
+	id, ok := r.Context().Value(util.CTX_USER_ID).(int)
+
+	// Invalid user ID
+	if !ok {
+		return -1
+	}
+
+	return id
 }
 
 // Parse ID from path by key
