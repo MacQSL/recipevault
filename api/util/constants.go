@@ -1,6 +1,7 @@
 package util
 
-type CTXString string // Context key type
+// Key type used with context
+type Key string
 
 // Context keys
-const CTX_USER_ID CTXString = "userID"
+const CTX_USER_ID Key = "userID"

@@ -21,7 +21,8 @@ func TestGetCtxUserID_Valid(t *testing.T) {
 
 func TestGetCtxUserID_Fail(t *testing.T) {
 	r := httptest.NewRequest("GET", "/api", nil)
-	ctx := context.WithValue(r.Context(), "FAIL", 1)
+	var fail util.Key = "FAIL"
+	ctx := context.WithValue(r.Context(), fail, 1)
 	r = r.WithContext(ctx)
 
 	id := getCtxUserID(r)
