@@ -27,7 +27,7 @@ func GetUserCookbooks(log util.ILogger, db *sql.DB) http.HandlerFunc {
 		jData, err := json.Marshal(data)
 
 		if err != nil {
-			log.Error("unable to parse response to json", err)
+			log.Error("JSON parse", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}

@@ -15,6 +15,7 @@ func GetCookbook(log util.ILogger, db *sql.DB) http.HandlerFunc {
 	service := service.NewCookbookService(repository)
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		userID := getCtxUserID(r)
 		cookbookID, err := parsePathID(r, "cookbookID")
 
 		// check path param is valid and integer
@@ -24,7 +25,7 @@ func GetCookbook(log util.ILogger, db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		data, err := service.GetCookbook(cookbookID)
+		data, err := service.GetUserCookbook(cookbookID, userID)
 
 		// handle database error
 		if err != nil {

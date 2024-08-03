@@ -56,7 +56,7 @@ func (r *CookbookRepository) GetCookbooksByUserID(userID int) ([]model.Cookbook,
 	return data, err
 }
 
-// Get Cookbooks by User ID
+// Get Cookbook by ID
 func (r *CookbookRepository) GetCookbookByID(cookbookID int) (model.Cookbook, error) {
 
 	row := r.db.QueryRow(`
