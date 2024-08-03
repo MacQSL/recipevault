@@ -1,4 +1,4 @@
-module recipevault/api
+module recipevault
 
 go 1.22.5
 

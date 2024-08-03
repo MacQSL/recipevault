@@ -2,7 +2,7 @@ package handler
 
 import (
 	"net/http"
-	"recipevault/api/util"
+	"recipevault/util"
 	"strconv"
 )
 

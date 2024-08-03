@@ -1,9 +1,9 @@
-package server
+package db
 
 import (
 	"database/sql"
 	"fmt"
-	"recipevault/api/util"
+	"recipevault/util"
 )
 
 // Get formatted database connection string

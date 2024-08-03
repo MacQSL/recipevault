@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"recipevault/api/repository"
 	"recipevault/api/service"
-	"recipevault/api/util"
+	"recipevault/util"
 )
 
 // Get cookbook by id

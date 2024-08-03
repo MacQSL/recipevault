@@ -3,7 +3,7 @@
 ############################
 FROM golang:1.22.5 as build
 
-WORKDIR /opt/api
+WORKDIR /opt/backend
 
 COPY . ./
 
@@ -11,7 +11,7 @@ COPY . ./
 RUN go get -d -v
 
 # Build the binary.
-RUN CGO_ENABLED=0 go build -o /api-executable
+RUN CGO_ENABLED=0 go build -o /backend-executable
 
 
 ############################
@@ -20,7 +20,7 @@ RUN CGO_ENABLED=0 go build -o /api-executable
 FROM scratch
 
 # Copy our static executable.
-COPY --from=build /api-executable /api-executable
+COPY --from=build /backend-executable /backend-executable
 
 # Run the main binary.
-ENTRYPOINT ["/api-executable"]
+ENTRYPOINT ["/backend-executable"]

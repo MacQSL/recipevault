@@ -1,9 +1,9 @@
-package server
+package handler
 
 import (
 	"context"
 	"net/http"
-	"recipevault/api/util"
+	"recipevault/util"
 )
 
 // Authenticate and authorize middleware

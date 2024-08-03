@@ -2,6 +2,7 @@ version: "3.5"
 
 services:
   # Postgres database service
+  # TODO: update db service to user golang backend
   db:
     image: ${DOCKER_PROJECT_NAME}-db-img
     container_name: ${DOCKER_PROJECT_NAME}-db-container
@@ -55,7 +56,7 @@ services:
       image: ${DOCKER_PROJECT_NAME}-api-img
       container_name: ${DOCKER_PROJECT_NAME}-api-container
       build:
-        context: ./api
+        context: ./backend
         dockerfile: ./.docker/Dockerfile.api.dev
       ports:
         - ${API_PORT}:${API_PORT}
@@ -68,14 +69,14 @@ services:
         - DB_USER_API=${DB_USER_API}
         - DB_USER_API_PASSWORD=${DB_USER_API_PASSWORD}
       volumes:
-        - ./api:/opt/api
+        - ./backend:/opt/backend
       networks:
         - recipevault-network
       depends_on:
         migrations:
           condition: service_started
 
-      command: 'air --build.cmd "go build -o bin/api" --build.bin "./bin/api"'
+      command: 'air --build.cmd "go build -o bin/backend cmd/api/main.go" --build.bin "./bin/backend"'
 
 networks:
   recipevault-network:

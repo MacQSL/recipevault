@@ -3,7 +3,8 @@ package handler
 import (
 	"context"
 	"net/http/httptest"
-	"recipevault/api/util"
+	"recipevault/types"
+	"recipevault/util"
 	"testing"
 )
 
@@ -21,7 +22,7 @@ func TestGetCtxUserID_Valid(t *testing.T) {
 
 func TestGetCtxUserID_Fail(t *testing.T) {
 	r := httptest.NewRequest("GET", "/api", nil)
-	var fail util.Key = "FAIL"
+	var fail types.Key = "FAIL"
 	ctx := context.WithValue(r.Context(), fail, 1)
 	r = r.WithContext(ctx)
 

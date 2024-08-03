@@ -1,8 +1,8 @@
-package server
+package handler
 
 import (
 	"net/http"
-	"recipevault/api/util"
+	"recipevault/util"
 	"time"
 )
 

@@ -1,10 +1,10 @@
-package server
+package api
 
 import (
 	"database/sql"
 	"net/http"
 	"recipevault/api/handler"
-	"recipevault/api/util"
+	"recipevault/util"
 )
 
 // Add routes and inject dependencies to handlers
@@ -25,12 +25,12 @@ func NewRouter(mux *http.ServeMux, log util.ILogger, db *sql.DB) http.Handler {
 	var router http.Handler = mux
 
 	// Generate middleware
-	logMiddleware := LoggerMiddleware(log)
-	authMiddleware := AuthMiddleware(log)
+	logMiddleware := handler.LoggerMiddleware(log)
+	authMiddleware := handler.AuthMiddleware(log)
 
 	// Apply middleware to ALL routes
 	router = logMiddleware(router)
-	router = HeadersMiddleware(router)
+	router = handler.HeadersMiddleware(router)
 	router = authMiddleware(router)
 
 	return router

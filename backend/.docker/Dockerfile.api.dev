@@ -1,6 +1,6 @@
 FROM golang:1.22.5
 
-WORKDIR /opt/api
+WORKDIR /opt/backend
 
 RUN go install github.com/air-verse/air@latest
 

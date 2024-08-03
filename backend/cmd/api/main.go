@@ -1,19 +1,23 @@
-package server
+package main
 
 import (
 	"net/http"
-	"recipevault/api/util"
+	"recipevault/api"
+	"recipevault/db"
+	"recipevault/util"
+
+	_ "github.com/lib/pq"
 )
 
 // Run http server
-func Run() {
+func main() {
 	log := util.NewLogger()
 	conf := util.NewConfig()
 
 	mux := http.NewServeMux()
-	db := ConnectDB(log, conf)
+	db := db.ConnectDB(log, conf)
 
-	router := NewRouter(mux, log, db)
+	router := api.NewRouter(mux, log, db)
 
 	server := http.Server{
 		Addr:    ":" + conf.API_PORT,

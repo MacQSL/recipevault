@@ -2,8 +2,8 @@ package service
 
 import (
 	"errors"
-	"recipevault/api/model"
 	"recipevault/api/repository"
+	"recipevault/models"
 )
 
 type CookbookService struct {
@@ -17,19 +17,19 @@ func NewCookbookService(repo *repository.CookbookRepository) *CookbookService {
 }
 
 // Get cookbook
-func (s *CookbookService) GetCookbook(cookbookID int) (model.Cookbook, error) {
+func (s *CookbookService) GetCookbook(cookbookID int) (models.Cookbook, error) {
 	return s.repository.GetCookbookByID(cookbookID)
 }
 
 // Get user cookbooks
-func (s *CookbookService) GetUserCookbooks(userID int) ([]model.Cookbook, error) {
+func (s *CookbookService) GetUserCookbooks(userID int) ([]models.Cookbook, error) {
 	return s.repository.GetCookbooksByUserID(userID)
 }
 
 // Get user cookbook
-func (s *CookbookService) GetUserCookbook(cookbookID int, userID int) (model.Cookbook, error) {
+func (s *CookbookService) GetUserCookbook(cookbookID int, userID int) (models.Cookbook, error) {
 	cookbooks, err := s.repository.GetCookbooksByUserID(userID)
-	cookbook := model.Cookbook{}
+	cookbook := models.Cookbook{}
 	if err != nil {
 		return cookbook, err
 	}

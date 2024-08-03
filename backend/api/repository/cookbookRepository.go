@@ -2,7 +2,7 @@ package repository
 
 import (
 	"database/sql"
-	"recipevault/api/model"
+	"recipevault/models"
 )
 
 type CookbookRepository struct {
@@ -16,12 +16,12 @@ func NewCookbookRepository(db *sql.DB) *CookbookRepository {
 }
 
 // Scan rows into cookbooks
-func scanCookbooks(rows *sql.Rows) ([]model.Cookbook, error) {
+func scanCookbooks(rows *sql.Rows) ([]models.Cookbook, error) {
 	defer rows.Close()
 
-	cookbooks := []model.Cookbook{}
+	cookbooks := []models.Cookbook{}
 	for rows.Next() {
-		c := model.Cookbook{}
+		c := models.Cookbook{}
 		err := rows.Scan(&c.Cookbook_id, &c.Name, &c.Description)
 		if err != nil {
 			return nil, err
@@ -33,7 +33,7 @@ func scanCookbooks(rows *sql.Rows) ([]model.Cookbook, error) {
 }
 
 // Get Cookbooks by User ID
-func (r *CookbookRepository) GetCookbooksByUserID(userID int) ([]model.Cookbook, error) {
+func (r *CookbookRepository) GetCookbooksByUserID(userID int) ([]models.Cookbook, error) {
 
 	rows, err := r.db.Query(`
     SELECT
@@ -55,7 +55,7 @@ func (r *CookbookRepository) GetCookbooksByUserID(userID int) ([]model.Cookbook,
 }
 
 // Get Cookbook by ID
-func (r *CookbookRepository) GetCookbookByID(cookbookID int) (model.Cookbook, error) {
+func (r *CookbookRepository) GetCookbookByID(cookbookID int) (models.Cookbook, error) {
 
 	row := r.db.QueryRow(`
     SELECT
@@ -65,7 +65,7 @@ func (r *CookbookRepository) GetCookbookByID(cookbookID int) (model.Cookbook, er
     FROM cookbook c
     WHERE c.cookbook_id = $1;`, cookbookID)
 
-	c := model.Cookbook{}
+	c := models.Cookbook{}
 
 	err := row.Scan(&c.Cookbook_id, &c.Name, &c.Description)
 
