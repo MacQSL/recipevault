@@ -60,3 +60,13 @@ run-backend: ## Runs all backend containers
 	@echo "Make: run-backend - running backend images"
 	@echo "==============================================="
 	@docker-compose -f docker-compose.yml up -d db migrations api
+
+## ------------------------------------------------------------------------------
+## Test Commands
+## ------------------------------------------------------------------------------
+
+test-api: ## Test api
+	@echo "==============================================="
+	@echo "Make: test-api - running api test suite"
+	@echo "==============================================="
+	@cd ./api && go test -v ./...

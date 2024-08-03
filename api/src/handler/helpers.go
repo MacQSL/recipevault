@@ -1,35 +1,21 @@
 package handler
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
 	"recipevault/api/src/util"
+	"strconv"
 )
 
-// Collection of handler related utils
-
-// Get userID from request context - see server/authMiddleware.go
-func getUserID(r *http.Request) int {
-	return r.Context().Value(util.CTX_USER_ID).(int)
+// Get userID from request context [server.authMiddleware]
+func getCtxUserID(r *http.Request) int {
+	id, ok := r.Context().Value(util.CTX_USER_ID).(int)
+	if !ok {
+		return -1 // Invalid user ID
+	}
+	return id
 }
 
-// Encode the response as JSON
-func encode[T any](w http.ResponseWriter, v T) error {
-	if err := json.NewEncoder(w).Encode(v); err != nil {
-		return fmt.Errorf("encode json: %w", err)
-	}
-
-	return nil
-}
-
-// Decode the request body as JSON
-func decode[T any](r *http.Request) (T, error) {
-	var v T
-
-	if err := json.NewDecoder(r.Body).Decode(&v); err != nil {
-		return v, fmt.Errorf("decode json: %w", err)
-	}
-
-	return v, nil
+// Parse ID from URL path by key
+func parsePathID(r *http.Request, k string) (int, error) {
+	return strconv.Atoi(r.PathValue(k))
 }

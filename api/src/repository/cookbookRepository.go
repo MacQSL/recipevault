@@ -11,10 +11,9 @@ type CookbookRepository struct {
 	db  *sql.DB
 }
 
-func NewCookbookRepository(log util.ILogger, db *sql.DB) *CookbookRepository {
+func NewCookbookRepository(db *sql.DB) *CookbookRepository {
 	return &CookbookRepository{
-		log: log,
-		db:  db,
+		db: db,
 	}
 }
 
@@ -49,11 +48,32 @@ func (r *CookbookRepository) GetCookbooksByUserID(userID int) ([]model.Cookbook,
     WHERE u.user_id = $1;`, userID)
 
 	if err != nil {
-		r.log.Error("CookbookRepository->GetCookbooksByUserID", err)
 		return nil, err
 	}
 
 	data, err := scanCookbooks(rows)
 
 	return data, err
+}
+
+// Get Cookbook by ID
+func (r *CookbookRepository) GetCookbookByID(cookbookID int) (model.Cookbook, error) {
+
+	row := r.db.QueryRow(`
+    SELECT
+      c.cookbook_id,
+      c.name,
+      c.description
+    FROM cookbook c
+    WHERE c.cookbook_id = $1;`, cookbookID)
+
+	c := model.Cookbook{}
+
+	err := row.Scan(&c.Cookbook_id, &c.Name, &c.Description)
+
+	if err != nil {
+		return c, err
+	}
+
+	return c, nil
 }

@@ -6,6 +6,9 @@ import (
 	"recipevault/api/src/util"
 )
 
+// Authenticate and authorize middleware
+//
+// Set the request context with important user details (userID)
 func AuthMiddleware(log util.ILogger) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {

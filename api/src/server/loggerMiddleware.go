@@ -8,12 +8,14 @@ import (
 
 type wrappedResponseWriter struct {
 	http.ResponseWriter
-	statusCode int
+	statusCode int // to not overwrite 'status' in original struct
 }
 
-func (w *wrappedResponseWriter) WriteHeader(statusCode int) {
-	w.ResponseWriter.WriteHeader(statusCode)
-	w.statusCode = statusCode
+// Wrap the existing implementation of WriteHeader to intercept
+// the status code when it is first passed to WriteHeader
+func (w *wrappedResponseWriter) WriteHeader(status int) {
+	w.ResponseWriter.WriteHeader(status)
+	w.statusCode = status
 }
 
 // Logs incoming requests ie: 200 GET /api/path 10
