@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 	"net/http"
-	"recipevault/api/src/util"
+	"recipevault/api/util"
 )
 
 // Authenticate and authorize middleware

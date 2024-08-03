@@ -2,8 +2,8 @@ package repository
 
 import (
 	"database/sql"
-	"recipevault/api/src/model"
-	"recipevault/api/src/util"
+	"recipevault/api/model"
+	"recipevault/api/util"
 )
 
 type CookbookRepository struct {

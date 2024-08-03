@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 	"net/http/httptest"
-	"recipevault/api/src/util"
+	"recipevault/api/util"
 	"testing"
 )
 

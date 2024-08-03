@@ -2,7 +2,7 @@ package server
 
 import (
 	"net/http"
-	"recipevault/api/src/util"
+	"recipevault/api/util"
 )
 
 // Run http server

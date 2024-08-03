@@ -2,8 +2,8 @@ package service
 
 import (
 	"errors"
-	"recipevault/api/src/model"
-	"recipevault/api/src/repository"
+	"recipevault/api/model"
+	"recipevault/api/repository"
 )
 
 type CookbookService struct {

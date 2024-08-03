@@ -4,9 +4,9 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
-	"recipevault/api/src/repository"
-	"recipevault/api/src/service"
-	"recipevault/api/src/util"
+	"recipevault/api/repository"
+	"recipevault/api/service"
+	"recipevault/api/util"
 )
 
 // Get all user cookbooks
