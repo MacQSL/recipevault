@@ -1,0 +1,10 @@
+name: API Test Suite
+on: [push]
+jobs:
+  go-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Running go tests
+        run: cd ./api  && go test -v ./...
