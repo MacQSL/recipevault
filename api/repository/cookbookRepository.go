@@ -3,12 +3,10 @@ package repository
 import (
 	"database/sql"
 	"recipevault/api/model"
-	"recipevault/api/util"
 )
 
 type CookbookRepository struct {
-	log util.ILogger
-	db  *sql.DB
+	db *sql.DB
 }
 
 func NewCookbookRepository(db *sql.DB) *CookbookRepository {

@@ -32,7 +32,13 @@ func GetUserCookbooks(log util.ILogger, db *sql.DB) http.HandlerFunc {
 			return
 		}
 
+		_, err = w.Write(jData)
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
 		w.WriteHeader(http.StatusOK)
-		w.Write(jData)
 	}
 }

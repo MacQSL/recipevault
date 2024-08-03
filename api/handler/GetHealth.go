@@ -7,5 +7,9 @@ import (
 
 // Welcome to RecipeVault endpoint
 func GetHealth(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "RecipeVault Healthy 🍔")
+	_, err := io.WriteString(w, "RecipeVault Healthy 🍔")
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+	}
 }
