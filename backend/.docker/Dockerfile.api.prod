@@ -1,0 +1,26 @@
+############################
+# STEP 1 build executable binary
+############################
+FROM golang:1.22.5 as build
+
+WORKDIR /opt/backend
+
+COPY . ./
+
+# Fetch dependencies.
+RUN go get -d -v
+
+# Build the binary.
+RUN CGO_ENABLED=0 go build -o /backend-executable
+
+
+############################
+# STEP 2 build a small image
+############################
+FROM scratch
+
+# Copy our static executable.
+COPY --from=build /backend-executable /backend-executable
+
+# Run the main binary.
+ENTRYPOINT ["/backend-executable"]

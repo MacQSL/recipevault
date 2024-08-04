@@ -1,0 +1,13 @@
+name: API Test Suite
+on: [push]
+jobs:
+  go-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Running go tests
+        run: go test -v ./...
