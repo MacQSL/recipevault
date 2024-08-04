@@ -16,6 +16,6 @@ func getCtxUserID(r *http.Request) int {
 }
 
 // Parse ID from URL path by key
-func parsePathID(r *http.Request, k string) (int, error) {
+func getPathID(r *http.Request, k string) (int, error) {
 	return strconv.Atoi(r.PathValue(k))
 }

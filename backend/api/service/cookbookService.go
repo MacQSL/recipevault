@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"recipevault/api/repository"
 	"recipevault/models"
 )
@@ -17,7 +16,7 @@ func NewCookbookService(repo *repository.CookbookRepository) *CookbookService {
 }
 
 // Get cookbook
-func (s *CookbookService) GetCookbook(cookbookID int) (models.Cookbook, error) {
+func (s *CookbookService) GetCookbook(cookbookID int) (*models.Cookbook, error) {
 	return s.repository.GetCookbookByID(cookbookID)
 }
 
@@ -27,17 +26,12 @@ func (s *CookbookService) GetUserCookbooks(userID int) ([]models.Cookbook, error
 }
 
 // Get user cookbook
-func (s *CookbookService) GetUserCookbook(cookbookID int, userID int) (models.Cookbook, error) {
-	cookbooks, err := s.repository.GetCookbooksByUserID(userID)
-	cookbook := models.Cookbook{}
-	if err != nil {
-		return cookbook, err
-	}
-	// find cookbook with matching cookbook_id
-	for i := range cookbooks {
-		if cookbooks[i].Cookbook_id == cookbookID {
-			return cookbooks[i], nil
-		}
-	}
-	return cookbook, errors.New("cookbook not found")
+func (s *CookbookService) GetUserCookbook(cookbookID int, userID int) (*models.Cookbook, error) {
+	return s.repository.GetCookbookByIDAndUserID(cookbookID, userID)
+}
+
+// Can user access the cookbook
+func (s *CookbookService) CanUserAccessCookbook(cookbookID int, userID int) bool {
+	_, err := s.repository.GetCookbookByIDAndUserID(cookbookID, userID)
+	return err == nil
 }

@@ -11,6 +11,10 @@ import (
 func addRoutes(mux *http.ServeMux, log util.ILogger, db *sql.DB) {
 	mux.HandleFunc("GET /health", handler.GetHealth)
 	mux.HandleFunc("GET /cookbooks", handler.GetUserCookbooks(log, db))
+
+	// Cookbook ID related endpoints require user authorization
+	//cookbookAuth := handler.CookbookAuthMiddleware(log, db)
+
 	mux.HandleFunc("GET /cookbooks/{cookbookID}", handler.GetUserCookbook(log, db))
 
 	mux.HandleFunc("/", http.NotFound)

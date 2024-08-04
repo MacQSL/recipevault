@@ -2,9 +2,9 @@ package handler
 
 import (
 	"database/sql"
-	"encoding/json"
 	"net/http"
 	"recipevault/api/repository"
+	"recipevault/api/response"
 	"recipevault/api/service"
 	"recipevault/util"
 )
@@ -16,11 +16,11 @@ func GetUserCookbook(log util.ILogger, db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		userID := getCtxUserID(r)
-		cookbookID, err := parsePathID(r, "cookbookID")
+		cookbookID, err := getPathID(r, "cookbookID")
 
 		// check path param is valid and integer
 		if err != nil {
-			http.Error(w, "invalid path param", http.StatusBadRequest)
+			response.Send(w, http.StatusBadRequest, "invalid path param")
 			return
 		}
 
@@ -28,26 +28,10 @@ func GetUserCookbook(log util.ILogger, db *sql.DB) http.HandlerFunc {
 
 		// handle database error
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			response.Send(w, http.StatusInternalServerError, "unable to retrieve cookbook")
 			return
 		}
 
-		jData, err := json.Marshal(data)
-
-		// handle json parsing errors
-		if err != nil {
-			log.Error("JSON parse", err)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-
-		_, err = w.Write(jData)
-
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-
-		w.WriteHeader(http.StatusOK)
+		response.SendOk(w, data)
 	}
 }
