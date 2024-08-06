@@ -2,52 +2,31 @@ package handler
 
 import (
 	"database/sql"
-	"encoding/json"
 	"net/http"
 	"recipevault/api/repository"
+	"recipevault/api/response"
 	"recipevault/api/service"
 	"recipevault/util"
 )
 
 // Get cookbook by id
-func GetUserCookbook(log util.ILogger, db *sql.DB) http.HandlerFunc {
+func GetUserCookbook(log *util.Logger, db *sql.DB) http.Handler {
 	repository := repository.NewCookbookRepository(db)
 	service := service.NewCookbookService(repository)
 
-	return func(w http.ResponseWriter, r *http.Request) {
-		userID := getCtxUserID(r)
-		cookbookID, err := parsePathID(r, "cookbookID")
-
-		// check path param is valid and integer
-		if err != nil {
-			http.Error(w, "invalid path param", http.StatusBadRequest)
-			return
-		}
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		userID := GetCtxUserID(r)
+		cookbookID := GetPathID(r, "cookbookID")
 
 		data, err := service.GetUserCookbook(cookbookID, userID)
 
 		// handle database error
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			log.Error(err)
+			response.Send500(w, "unable to retrieve cookbook")
 			return
 		}
 
-		jData, err := json.Marshal(data)
-
-		// handle json parsing errors
-		if err != nil {
-			log.Error("JSON parse", err)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-
-		_, err = w.Write(jData)
-
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-
-		w.WriteHeader(http.StatusOK)
-	}
+		response.Send200(w, data)
+	})
 }
