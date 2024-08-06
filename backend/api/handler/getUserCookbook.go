@@ -10,19 +10,13 @@ import (
 )
 
 // Get cookbook by id
-func GetUserCookbook(log util.ILogger, db *sql.DB) http.HandlerFunc {
+func GetUserCookbook(log *util.Logger, db *sql.DB) http.Handler {
 	repository := repository.NewCookbookRepository(db)
 	service := service.NewCookbookService(repository)
 
-	return func(w http.ResponseWriter, r *http.Request) {
-		userID := getCtxUserID(r)
-		cookbookID, err := getPathID(r, "cookbookID")
-
-		// check path param is valid and integer
-		if err != nil {
-			response.Send(w, http.StatusBadRequest, "invalid path param")
-			return
-		}
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		userID := GetCtxUserID(r)
+		cookbookID := GetPathID(r, "cookbookID")
 
 		data, err := service.GetUserCookbook(cookbookID, userID)
 
@@ -32,6 +26,6 @@ func GetUserCookbook(log util.ILogger, db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		response.SendOk(w, data)
-	}
+		response.Send200(w, data)
+	})
 }

@@ -14,7 +14,7 @@ func getDBConnectionString(c *util.Config) string {
 }
 
 // Connect to the database - panic if unsuccessfull
-func ConnectDB(log util.ILogger, c *util.Config) *sql.DB {
+func ConnectDB(log *util.Logger, c *util.Config) *sql.DB {
 	db, err := sql.Open("postgres", getDBConnectionString(c))
 
 	if err != nil {

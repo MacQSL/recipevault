@@ -29,11 +29,10 @@ func Send(w http.ResponseWriter, status int, data any) {
 	var jData []byte
 	var err error
 
-	// TODO: optimize for string data
 	if isSuccessStatus(status) {
 		jData, err = json.Marshal(data)
 	} else {
-		jData, err = json.Marshal(errorResponse{Error: data})
+		jData, err = json.Marshal(&errorResponse{Error: data})
 	}
 
 	// Failed to parse the data to JSON, 422
@@ -52,12 +51,27 @@ func Send(w http.ResponseWriter, status int, data any) {
 	}
 }
 
-// Send OK status with data
-func SendOk(w http.ResponseWriter, data any) {
+// Send OK (200) status with data
+func Send200(w http.ResponseWriter, data any) {
 	Send(w, http.StatusOK, data)
 }
 
-// Send CREATED status with data
-func SendCreated(w http.ResponseWriter, data any) {
+// Send CREATED (201) status with data
+func Send201(w http.ResponseWriter, data any) {
 	Send(w, http.StatusCreated, data)
+}
+
+// Send NOT FOUND (404)status with data
+func Send404(w http.ResponseWriter, data any) {
+	Send(w, http.StatusNotFound, data)
+}
+
+// Send BAD REQUEST (404)status with data
+func Send400(w http.ResponseWriter, data any) {
+	Send(w, http.StatusBadRequest, data)
+}
+
+// Send INTERNAL SERVER ERROR (500) status with data
+func Send500(w http.ResponseWriter, data any) {
+	Send(w, http.StatusInternalServerError, data)
 }

@@ -13,7 +13,7 @@ func TestGetCtxUserID_Valid(t *testing.T) {
 	ctx := context.WithValue(r.Context(), util.CTX_USER_ID, 1)
 	r = r.WithContext(ctx)
 
-	id := getCtxUserID(r)
+	id := GetCtxUserID(r)
 
 	if id != 1 {
 		t.Error("Expected 1 got", id)
@@ -26,7 +26,7 @@ func TestGetCtxUserID_Fail(t *testing.T) {
 	ctx := context.WithValue(r.Context(), fail, 1)
 	r = r.WithContext(ctx)
 
-	id := getCtxUserID(r)
+	id := GetCtxUserID(r)
 
 	if id != -1 {
 		t.Error("Expected -1 got", id)

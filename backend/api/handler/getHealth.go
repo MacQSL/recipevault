@@ -1,15 +1,13 @@
 package handler
 
 import (
-	"io"
 	"net/http"
+	"recipevault/api/response"
 )
 
-// Welcome to RecipeVault endpoint
-func GetHealth(w http.ResponseWriter, r *http.Request) {
-	_, err := io.WriteString(w, "RecipeVault Healthy 🍔")
-
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-	}
+// RecipeVault health check
+func GetHealth() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		response.Send200(w, "RecipeVault healthy")
+	})
 }

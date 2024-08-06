@@ -10,10 +10,8 @@ import (
 func StartServer() {
 	log := util.NewLogger()
 	conf := util.NewConfig()
-
-	mux := http.NewServeMux()
 	db := db.ConnectDB(log, conf)
-
+	mux := http.NewServeMux()
 	router := NewRouter(mux, log, db)
 
 	server := http.Server{

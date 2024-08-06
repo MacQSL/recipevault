@@ -16,15 +16,6 @@ const (
 	debugTag = "\033[36m" + "DEBUG: " + resetTag
 )
 
-// Custom API logger
-type ILogger interface {
-	Fatal(v ...interface{})
-	Error(v ...interface{})
-	Warn(v ...interface{})
-	Info(v ...interface{})
-	Debug(v ...interface{})
-}
-
 // Logging level as integer
 type Level int
 
@@ -44,7 +35,7 @@ type Logger struct {
 // ie: Setting DEBUG will render all log levels
 func NewLogger() *Logger {
 	return &Logger{
-		level:    3,
+		level:    4,
 		levelMap: map[string]Level{"FATAL": 0, "ERROR": 1, "WARN": 2, "INFO": 3, "DEBUG": 4},
 		fatal:    log.New(os.Stdout, fatalTag, log.LstdFlags),
 		error:    log.New(os.Stdout, errorTag, log.LstdFlags),

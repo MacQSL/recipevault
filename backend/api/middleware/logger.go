@@ -1,4 +1,4 @@
-package handler
+package middleware
 
 import (
 	"net/http"
@@ -19,9 +19,9 @@ func (w *wrappedResponseWriter) WriteHeader(status int) {
 }
 
 // Logs incoming requests ie: 200 GET /api/path 10
-func LoggerMiddleware(log util.ILogger) func(http.Handler) http.Handler {
+func LoggerMiddleware(log *util.Logger) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
-		fn := func(w http.ResponseWriter, r *http.Request) {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			start := time.Now()
 
 			wrapped := &wrappedResponseWriter{
@@ -32,7 +32,6 @@ func LoggerMiddleware(log util.ILogger) func(http.Handler) http.Handler {
 			next.ServeHTTP(wrapped, r)
 
 			log.Info(wrapped.statusCode, r.Method, r.URL.Path, time.Since(start))
-		}
-		return http.HandlerFunc(fn)
+		})
 	}
 }
