@@ -22,7 +22,8 @@ func GetUserCookbook(log *util.Logger, db *sql.DB) http.Handler {
 
 		// handle database error
 		if err != nil {
-			response.Send(w, http.StatusInternalServerError, "unable to retrieve cookbook")
+			log.Error(err)
+			response.Send500(w, "unable to retrieve cookbook")
 			return
 		}
 

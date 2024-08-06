@@ -19,7 +19,8 @@ func GetUserCookbooks(log *util.Logger, db *sql.DB) http.Handler {
 		data, err := service.GetUserCookbooks(userID)
 
 		if err != nil {
-			response.Send500(w, err)
+			log.Error(err)
+			response.Send500(w, "unable to retrieve cookbooks")
 			return
 		}
 

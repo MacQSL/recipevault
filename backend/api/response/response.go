@@ -2,14 +2,9 @@ package response
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
+	"recipevault/util"
 )
-
-// 1. Respond with success and data
-// 2. Parse data to JSON
-// 3. Respond with error and data
-// 4. Respond with error formatted as { "error": "aasdfadf" }
 
 type errorResponse struct {
 	Error interface{} `json:"error"`
@@ -45,9 +40,11 @@ func Send(w http.ResponseWriter, status int, data any) {
 	w.WriteHeader(status)
 	_, err = w.Write(jData)
 
-	// Handling the offchance the response writer fails
+	// Handling the edge case where response Write fails
+	// NOTE: Not sure if this is the best way to handle the logger
+	// trying to not pass the logger as a param for simplicity
 	if err != nil {
-		log.Println("ERROR: response.Send() Write", err)
+		util.NewLogger().Error("response.Send()->w.Write() failed", err)
 	}
 }
 
