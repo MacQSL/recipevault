@@ -6,13 +6,15 @@ import (
 	"recipevault/util"
 )
 
+// TODO: Ideal error shape { error: { message: "", issues: [] } }
+
 type errorResponse struct {
 	Error interface{} `json:"error"`
 }
 
 // Is the status successfull ie: 200 / 201
 //
-// Very simple implementation of this function, could be
+// NOTE: Very simple implementation of this function, could be
 // extended to strip the first digit from status and check
 // appropriately. ie: [2]00 (true) vs [4]00 (false)
 func isSuccessStatus(status int) bool {
@@ -41,6 +43,7 @@ func Send(w http.ResponseWriter, status int, data any) {
 	_, err = w.Write(jData)
 
 	// Handling the edge case where response Write fails
+	//
 	// NOTE: Not sure if this is the best way to handle the logger
 	// trying to not pass the logger as a param for simplicity
 	if err != nil {
