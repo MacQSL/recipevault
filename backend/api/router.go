@@ -19,12 +19,13 @@ func addRoutes(mux *http.ServeMux, log *util.Logger, db *sql.DB) {
 	// Initialize route middleware
 	cookbookAuth := middleware.CookbookAuthMiddleware(log, cs)
 
+	// Get health check
 	mux.Handle("GET /health", handler.GetHealth())
 	// Get all user Cookbooks
-	mux.Handle("GET /cookbooks", handler.GetUserCookbooks(log, cs))
-	// Get Cookbook by ID, includes Recipes
-	mux.Handle("GET /cookbooks/{cookbookID}", cookbookAuth(handler.GetUserCookbookWithRecipes(log, cs)))
-	// Get Cookbook Recipes
+	mux.Handle("GET /cookbooks", handler.GetUserCookbooksWithRecipes(log, cs))
+	// Deprecated? Get Cookbook by ID, includes Recipes
+	mux.Handle("GET /cookbooks/{cookbookID}", cookbookAuth(handler.GetUserCookbook(log, cs)))
+	// Deprecated? Get Cookbook Recipes
 	mux.Handle("GET /cookbooks/{cookbookID}/recipes", cookbookAuth(handler.GetCookbookRecipes(log, rs)))
 	// Get Recipe by ID
 	mux.Handle("GET /cookbooks/{cookbookID}/recipes/{recipeID}", cookbookAuth(handler.GetRecipe(log, rs)))

@@ -8,7 +8,7 @@ import (
 )
 
 // Get all user cookbooks
-func GetUserCookbooks(log *util.Logger, s *service.CookbookService) http.Handler {
+func GetUserCookbooksWithRecipes(log *util.Logger, s *service.CookbookService) http.Handler {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		userID := GetCtxUserID(r)
