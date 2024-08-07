@@ -1,18 +1,29 @@
 package service
 
 import (
+	"database/sql"
 	"recipevault/api/repository"
 	"recipevault/models"
 )
 
 type CookbookService struct {
-	repository *repository.CookbookRepository
+	repository    *repository.CookbookRepository
+	recipeService *RecipeService
 }
 
-func NewCookbookService(repo *repository.CookbookRepository) *CookbookService {
+// Construct new instance of CookbookService
+func NewCookbookService(r *repository.CookbookRepository, rs *RecipeService) *CookbookService {
 	return &CookbookService{
-		repository: repo,
+		repository:    r,
+		recipeService: rs,
 	}
+}
+
+// Initialize CookbookService with dependencies
+func InitCookbookService(db *sql.DB) *CookbookService {
+	repository := repository.NewCookbookRepository(db)
+	recipeService := InitRecipeService(db)
+	return NewCookbookService(repository, recipeService)
 }
 
 // Get cookbook

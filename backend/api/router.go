@@ -5,21 +5,29 @@ import (
 	"net/http"
 	"recipevault/api/handler"
 	"recipevault/api/middleware"
+	"recipevault/api/service"
 	"recipevault/util"
 )
 
 // Add routes and inject dependencies to handlers
 func addRoutes(mux *http.ServeMux, log *util.Logger, db *sql.DB) {
-	// Cookbook ID related endpoints require user authorization
-	cookbookAuth := middleware.CookbookAuthMiddleware(log, db)
+
+	// Initialize services
+	cs := service.InitCookbookService(db)
+	rs := service.InitRecipeService(db)
+
+	// Initialize route middleware
+	cookbookAuth := middleware.CookbookAuthMiddleware(log, cs)
 
 	mux.Handle("GET /health", handler.GetHealth())
-	// Get all user cookbooks
-	mux.Handle("GET /cookbooks", handler.GetUserCookbooks(log, db))
+	// Get all user cookbooks  TODO: Should contain array of recipes
+	mux.Handle("GET /cookbooks", handler.GetUserCookbooks(log, cs))
 	// Get cookbook by ID
-	mux.Handle("GET /cookbooks/{cookbookID}", cookbookAuth(handler.GetUserCookbook(log, db)))
-	// Get all cookbook recipes
-	mux.Handle("GET /cookbooks/{cookbookID}/recipes", cookbookAuth(handler.GetUserCookbook(log, db)))
+	mux.Handle("GET /cookbooks/{cookbookID}", cookbookAuth(handler.GetUserCookbook(log, cs)))
+	// Get cookbook recipes
+	mux.Handle("GET /cookbooks/{cookbookID}/recipes", cookbookAuth(handler.GetUserCookbook(log, cs)))
+	// Get recipe by ID
+	mux.Handle("GET /cookbooks/{cookbookID}/recipes/{recipeID}", cookbookAuth(handler.GetRecipe(log, rs)))
 
 	mux.Handle("/", http.NotFoundHandler())
 }
@@ -28,11 +36,13 @@ func addRoutes(mux *http.ServeMux, log *util.Logger, db *sql.DB) {
 func NewRouter(mux *http.ServeMux, log *util.Logger, db *sql.DB) http.Handler {
 	mux.Handle("/api/", http.StripPrefix("/api", mux)) // prepend /api/
 
+	// Add above routes to the handler
 	addRoutes(mux, log, db)
 
+	// Cast as handler to wrap with middleware
 	var router http.Handler = mux
 
-	// Generate middleware
+	// Initialize middleware with dependencies
 	logMiddleware := middleware.LoggerMiddleware(log)
 	authMiddleware := middleware.AuthMiddleware(log)
 

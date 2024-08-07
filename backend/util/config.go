@@ -1,9 +1,11 @@
 package util
 
 import (
+	"fmt"
 	"os"
 )
 
+// Exact mapping of expected ENV variables
 type Config struct {
 	APP_ENV     string
 	API_PORT    string
@@ -25,6 +27,13 @@ func NewConfig() *Config {
 		DB_PASSWORD: getEnv("DB_USER_API_PASSWORD", "apiuser"),
 		DB_DATABASE: getEnv("DB_DATABASE", "recipevault"),
 	}
+}
+
+// Get database connection URL
+func (c *Config) GetDBConnectionURL() string {
+	return fmt.Sprintf(`
+    host=%s port=%s user=%s password=%s dbname=%s sslmode=disable`,
+		c.DB_HOST, c.DB_PORT, c.DB_USER, c.DB_PASSWORD, c.DB_DATABASE)
 }
 
 // Get env value or fallback if not set
