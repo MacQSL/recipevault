@@ -7,18 +7,17 @@ import (
 	"recipevault/util"
 )
 
-// Get cookbook by id
-func GetUserCookbookWithRecipes(log *util.Logger, s *service.CookbookService) http.Handler {
+// Get Cookbook Recipes
+func GetCookbookRecipes(log *util.Logger, s *service.RecipeService) http.Handler {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		userID := GetCtxUserID(r)
 		cookbookID := GetPathID(r, "cookbookID")
 
-		data, err := s.GetUserCookbook(cookbookID, userID)
+		data, err := s.GetCookbookRecipes(cookbookID)
 
 		// handle database error
 		if err != nil {
-			log.Error("handler->GetUserCookbook", err)
+			log.Error("handler->GetCookbookRecipes", err)
 			response.Send500(w, "unable to retrieve cookbook")
 			return
 		}

@@ -12,7 +12,7 @@ func GetUserCookbooks(log *util.Logger, s *service.CookbookService) http.Handler
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		userID := GetCtxUserID(r)
-		data, err := s.GetUserCookbooks(userID)
+		data, err := s.GetUserCookbooksWithRecipes(userID)
 
 		if err != nil {
 			log.Error("handler->GetUserCookbooks", err)

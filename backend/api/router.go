@@ -20,13 +20,13 @@ func addRoutes(mux *http.ServeMux, log *util.Logger, db *sql.DB) {
 	cookbookAuth := middleware.CookbookAuthMiddleware(log, cs)
 
 	mux.Handle("GET /health", handler.GetHealth())
-	// Get all user cookbooks  TODO: Should contain array of recipes
+	// Get all user Cookbooks
 	mux.Handle("GET /cookbooks", handler.GetUserCookbooks(log, cs))
-	// Get cookbook by ID
-	mux.Handle("GET /cookbooks/{cookbookID}", cookbookAuth(handler.GetUserCookbook(log, cs)))
-	// Get cookbook recipes
-	mux.Handle("GET /cookbooks/{cookbookID}/recipes", cookbookAuth(handler.GetUserCookbook(log, cs)))
-	// Get recipe by ID
+	// Get Cookbook by ID, includes Recipes
+	mux.Handle("GET /cookbooks/{cookbookID}", cookbookAuth(handler.GetUserCookbookWithRecipes(log, cs)))
+	// Get Cookbook Recipes
+	mux.Handle("GET /cookbooks/{cookbookID}/recipes", cookbookAuth(handler.GetCookbookRecipes(log, rs)))
+	// Get Recipe by ID
 	mux.Handle("GET /cookbooks/{cookbookID}/recipes/{recipeID}", cookbookAuth(handler.GetRecipe(log, rs)))
 
 	mux.Handle("/", http.NotFoundHandler())

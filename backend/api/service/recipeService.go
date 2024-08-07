@@ -27,3 +27,8 @@ func InitRecipeService(db *sql.DB) *RecipeService {
 func (s *RecipeService) GetRecipe(recipeID int) (*models.Recipe, error) {
 	return s.repository.GetRecipeByID(recipeID)
 }
+
+// Get cookbook recipes
+func (s *RecipeService) GetCookbookRecipes(cookbookID int) ([]models.Recipe, error) {
+	return s.repository.GetRecipesByCookbookID(cookbookID)
+}
