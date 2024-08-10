@@ -32,7 +32,7 @@ func (s *CookbookService) GetCookbook(cookbookID int) (*models.Cookbook, error) 
 }
 
 // Get user cookbooks
-func (s *CookbookService) GetUserCookbooksWithRecipes(userID int) ([]models.CookbookRecipes, error) {
+func (s *CookbookService) GetUserCookbooksWithRecipes(userID int) (*[]models.CookbookRecipes, error) {
 	return s.repository.GetCookbooksWithRecipesByUserID(userID)
 }
 

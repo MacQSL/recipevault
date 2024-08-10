@@ -29,6 +29,6 @@ func (s *RecipeService) GetRecipe(recipeID int) (*models.Recipe, error) {
 }
 
 // Get cookbook recipes
-func (s *RecipeService) GetCookbookRecipes(cookbookID int) ([]models.Recipe, error) {
+func (s *RecipeService) GetCookbookRecipes(cookbookID int) (*[]models.Recipe, error) {
 	return s.repository.GetRecipesByCookbookID(cookbookID)
 }

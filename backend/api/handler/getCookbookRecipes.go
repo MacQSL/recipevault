@@ -18,7 +18,7 @@ func GetCookbookRecipes(log *util.Logger, s *service.RecipeService) http.Handler
 		// handle database error
 		if err != nil {
 			log.Error("handler->GetCookbookRecipes", err)
-			response.Send500(w, "unable to retrieve cookbook")
+			response.Send500(w, err, "unable to retrieve cookbook")
 			return
 		}
 

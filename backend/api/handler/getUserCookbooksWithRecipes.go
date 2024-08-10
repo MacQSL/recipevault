@@ -16,7 +16,7 @@ func GetUserCookbooksWithRecipes(log *util.Logger, s *service.CookbookService) h
 
 		if err != nil {
 			log.Error("handler->GetUserCookbooks", err)
-			response.Send500(w, "unable to retrieve cookbooks")
+			response.Send500(w, err, "unable to retrieve cookbooks")
 			return
 		}
 

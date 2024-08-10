@@ -27,19 +27,15 @@ func (r *RecipeRepository) GetRecipeByID(recipeID int) (*models.Recipe, error) {
     FROM recipe
     WHERE recipe_id = $1;`, recipeID)
 
-	c := &models.Recipe{}
+	recipe := &models.Recipe{}
 
-	err := row.Scan(&c.Recipe_id, &c.Cookbook_id, &c.Name, &c.Url, &c.Description)
+	err := row.Scan(&recipe.RecipeID, &recipe.CookbookID, &recipe.Name, &recipe.Url, &recipe.Description)
 
-	if err != nil {
-		return nil, err
-	}
-
-	return c, nil
+	return recipe, err
 }
 
 // Get Recipes by Cookbook ID
-func (r *RecipeRepository) GetRecipesByCookbookID(cookbookID int) ([]models.Recipe, error) {
+func (r *RecipeRepository) GetRecipesByCookbookID(cookbookID int) (*[]models.Recipe, error) {
 	rows, err := r.db.Query(`
     SELECT
       r.recipe_id,
@@ -61,16 +57,20 @@ func (r *RecipeRepository) GetRecipesByCookbookID(cookbookID int) ([]models.Reci
 	recipes := []models.Recipe{}
 
 	for rows.Next() {
-		c := models.Recipe{}
+		recipe := models.Recipe{}
 
-		err := rows.Scan(&c.Recipe_id, &c.Cookbook_id, &c.Name, &c.Url, &c.Description)
+		err := rows.Scan(&recipe.RecipeID, &recipe.CookbookID, &recipe.Name, &recipe.Url, &recipe.Description)
 
 		if err != nil {
+			// Return empty array if no rows
+			if err == sql.ErrNoRows {
+				return &recipes, nil
+			}
 			return nil, err
 		}
 
-		recipes = append(recipes, c)
+		recipes = append(recipes, recipe)
 	}
 
-	return recipes, nil
+	return &recipes, nil
 }
