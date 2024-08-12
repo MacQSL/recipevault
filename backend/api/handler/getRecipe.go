@@ -18,7 +18,7 @@ func GetRecipe(log *util.Logger, s *service.RecipeService) http.Handler {
 		// handle database error
 		if err != nil {
 			log.Error("handler->GetRecipe:", err)
-			response.Send500(w, "unable to retrieve recipe")
+			response.SendError(w, err, "unable to retrieve recipe")
 			return
 		}
 

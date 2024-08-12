@@ -21,9 +21,9 @@ func NewCookbookService(r *repository.CookbookRepository, rs *RecipeService) *Co
 
 // Initialize CookbookService with dependencies
 func InitCookbookService(db *sql.DB) *CookbookService {
-	repository := repository.NewCookbookRepository(db)
-	recipeService := InitRecipeService(db)
-	return NewCookbookService(repository, recipeService)
+	r := repository.NewCookbookRepository(db)
+	rs := InitRecipeService(db)
+	return NewCookbookService(r, rs)
 }
 
 // Get cookbook
@@ -32,8 +32,8 @@ func (s *CookbookService) GetCookbook(cookbookID int) (*models.Cookbook, error) 
 }
 
 // Get user cookbooks
-func (s *CookbookService) GetUserCookbooks(userID int) ([]models.Cookbook, error) {
-	return s.repository.GetCookbooksByUserID(userID)
+func (s *CookbookService) GetUserCookbooksWithRecipes(userID int) (*[]models.CookbookRecipes, error) {
+	return s.repository.GetCookbooksWithRecipesByUserID(userID)
 }
 
 // Get user cookbook

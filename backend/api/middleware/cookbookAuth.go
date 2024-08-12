@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"errors"
 	"net/http"
 	"recipevault/api/handler"
 	"recipevault/api/response"
@@ -17,20 +18,20 @@ func CookbookAuthMiddleware(log *util.Logger, s *service.CookbookService) func(h
 			cookbookID := handler.GetPathID(r, "cookbookID")
 
 			if cookbookID == -1 {
-				response.Send400(w, "invalid cookbookID path param")
+				response.Send400(w, errors.New("cannot retrieve path param"), "invalid cookbookID path param")
 				return
 			}
 
 			// NOTE: There might be a optimization where we include the
 			// user cookbook access within the token. I think the performance
 			// gains would be very trivial, but would prevent having to call the database
-			// on every cookbook ID related endpoint before actual query
+			// on every cookbook ID related endpoint before the actual query
 			access := s.CanUserAccessCookbook(cookbookID, userID)
 
 			if access {
 				next.ServeHTTP(w, r)
 			} else {
-				response.Send(w, http.StatusForbidden, "cookbook access denied")
+				response.Send403(w, errors.New("cookbook auth failed"), "cookbook access denied")
 			}
 		})
 	}
