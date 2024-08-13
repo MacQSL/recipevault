@@ -91,8 +91,8 @@ services:
         - NODE_ENV=${NODE_ENV}
         - VITE_PORT=${APP_PORT}
       volumes:
-        - /opt/database/node_modules # prevents local node_modules overriding container node_modules
         - ./app:/opt/app
+        - /opt/app/node_modules # prevents local node_modules overriding container node_modules
       networks:
         - recipevault-network
 
