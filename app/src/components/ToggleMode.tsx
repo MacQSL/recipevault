@@ -10,7 +10,7 @@ export const ToggleMode = () => {
         setMode(mode === "light" ? "dark" : "light");
       }}
     >
-      toggle
+      toggles
     </Button>
   );
 };
