@@ -1,5 +1,3 @@
-version: "2.29.1"
-
 services:
   # Postgres database service
   # TODO: update db service to user golang backend
