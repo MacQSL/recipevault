@@ -1,4 +1,4 @@
-version: "3.5"
+version: "2.29.1"
 
 services:
   # Postgres database service
@@ -89,7 +89,8 @@ services:
         - ${APP_PORT}:${APP_PORT}
       environment:
         - NODE_ENV=${NODE_ENV}
-        - VITE_PORT=${APP_PORT}
+        - VITE_APP_PORT=${APP_PORT}
+        - VITE_API_URL=${API_URL}
       volumes:
         - ./app:/opt/app
         - /opt/app/node_modules # prevents local node_modules overriding container node_modules

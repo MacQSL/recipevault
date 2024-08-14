@@ -37,13 +37,13 @@ close: ## Closes all project containers
 	@echo "==============================================="
 	@echo "Make: close - closing Docker containers"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml down
+	@docker compose -f docker-compose.yml down
 
 clean: ## Closes and cleans (removes) all project containers
 	@echo "==============================================="
 	@echo "Make: clean - closing and cleaning Docker containers"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml down -v --rmi all --remove-orphans
+	@docker compose -f docker-compose.yml down -v --rmi all --remove-orphans
 
 ## ------------------------------------------------------------------------------
 ## Build/Run Backend Commands
@@ -54,13 +54,13 @@ build-backend: ## Builds all backend containers
 	@echo "==============================================="
 	@echo "Make: build-backend - building backend images"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml up -d --build recipevault-db recipevault-migrations recipevault-api
+	@docker compose -f docker-compose.yml up -d --build recipevault-db recipevault-migrations recipevault-api
 
 run-backend: ## Runs all backend containers
 	@echo "==============================================="
 	@echo "Make: run-backend - running backend images"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml up -d recipevault-db recipevault-migrations recipevault-api
+	@docker compose -f docker-compose.yml up -d recipevault-db recipevault-migrations recipevault-api
 
 ## ------------------------------------------------------------------------------
 ## Build/Run App Commands
@@ -71,13 +71,13 @@ build-app: ## Builds all frontend containers
 	@echo "==============================================="
 	@echo "Make: build-frontend - building frontend images"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml up -d --build recipevault-app
+	@docker compose -f docker-compose.yml up -d --build recipevault-app
 
 run-app: ## Runs all frontend containers
 	@echo "==============================================="
 	@echo "Make: run-frontend - running frontend images"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml up -d recipevault-app
+	@docker compose -f docker-compose.yml up -d recipevault-app
 
 ## ------------------------------------------------------------------------------
 ## Test Commands
