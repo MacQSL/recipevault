@@ -18,11 +18,10 @@ export class CookbookService {
    * Get user cookbooks with recipes.
    *
    * @async
-   * @returns {Promise<ICookbookRecipes>}
+   * @returns {Promise<ICookbookRecipes[]>}
    */
-  async getCookbooksWithRecipes(): Promise<ICookbookRecipes> {
+  async getCookbooksWithRecipes(): Promise<ICookbookRecipes[]> {
     const response = await this.api.get("/cookbooks");
-    console.log(response.data.data.data);
-    return response.data.data;
+    return response.data;
   }
 }

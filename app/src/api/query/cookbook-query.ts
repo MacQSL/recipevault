@@ -9,13 +9,13 @@ const cookbookService = new CookbookService(instance);
 
  * Get user cookbooks with recipes
  *
- * @returns {ICookbookRecipes}
+ * @returns {ICookbookRecipes[]}
  */
 export const getCookbooksWithRecipes = () => {
   return queryOptions({
     queryKey: ["getCookbooksWithRecipes"],
     queryFn: async () => {
-      cookbookService.getCookbooksWithRecipes();
+      return await cookbookService.getCookbooksWithRecipes();
     },
   });
 };
