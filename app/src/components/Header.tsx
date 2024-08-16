@@ -1,22 +1,19 @@
-import { Avatar, Input, Sheet } from "@mui/joy";
+import { Avatar, Input } from "@mui/joy";
 import { ToggleMode } from "./ToggleMode";
+import { SheetBox } from "./SheetBox";
 
 export const Header = () => {
   return (
-    <Sheet
+    <SheetBox
       sx={{
-        display: "flex",
         justifyContent: "space-between",
-        p: 2,
-        boxShadow: "md",
-        borderRadius: "md",
       }}
     >
-      <Input placeholder="Search for recipes..."></Input>
+      <Input placeholder="Search for recipes..." sx={{ width: 300 }}></Input>
       <ToggleMode />
       <Avatar variant="outlined" color="primary">
         MD
       </Avatar>
-    </Sheet>
+    </SheetBox>
   );
 };

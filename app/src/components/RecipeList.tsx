@@ -23,7 +23,7 @@ export const RecipeList = () => {
           </Typography>
           <Button sx={{ ml: "auto" }}>Create</Button>
         </ListItem>
-        <ListDivider />
+        <ListDivider sx={{ mt: 2 }} />
         <ListItem>
           <Avatar variant="outlined" color="primary">
             MD

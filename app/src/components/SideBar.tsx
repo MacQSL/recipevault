@@ -1,5 +1,6 @@
 import {
   List,
+  ListDivider,
   ListItem,
   ListItemButton,
   ListSubheader,
@@ -40,7 +41,8 @@ export const SideBar = () => {
             </ListItem>
           </Skeleton>
         ))}
-        <ListItem sx={{ mt: "auto" }}>
+        <ListDivider sx={{ mt: "auto" }} />
+        <ListItem>
           <ListItemButton>Settings</ListItemButton>
         </ListItem>
         <ListItem>
