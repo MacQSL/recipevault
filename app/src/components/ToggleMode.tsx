@@ -1,16 +1,14 @@
-import { Button, useColorScheme } from "@mui/joy";
+import { Switch, useColorScheme } from "@mui/joy";
 
 export const ToggleMode = () => {
   const { mode, setMode } = useColorScheme();
 
   return (
-    <Button
-      variant="outlined"
-      onClick={() => {
+    <Switch
+      checked={mode === "dark"}
+      onChange={() => {
         setMode(mode === "light" ? "dark" : "light");
       }}
-    >
-      Toggle
-    </Button>
+    />
   );
 };

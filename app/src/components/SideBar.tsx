@@ -3,26 +3,22 @@ import {
   ListItem,
   ListItemButton,
   ListSubheader,
-  Sheet,
   Skeleton,
   Typography,
 } from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
 import { getCookbooksWithRecipes } from "../api/query/cookbook-query";
+import { SheetBox } from "./SheetBox";
 
 export const SideBar = () => {
   const { data: cookbooks, isLoading } = useQuery(getCookbooksWithRecipes());
 
   return (
-    <Sheet
-      variant="outlined"
+    <SheetBox
       sx={{
         my: 2,
         ml: 2,
-        p: 2,
-        display: "flex",
         width: 250,
-        borderRadius: "md",
       }}
     >
       <List size="md">
@@ -31,7 +27,7 @@ export const SideBar = () => {
             RecipeVault
           </Typography>
         </ListItem>
-        <ListItem sx={{ mt: 4 }}>
+        <ListItem sx={{ mt: 4, ".Mui-selected": { borderRadius: "lg" } }}>
           <ListItemButton>
             <ListItemButton>Dashboard</ListItemButton>
           </ListItemButton>
@@ -51,6 +47,6 @@ export const SideBar = () => {
           <ListItemButton>Log out</ListItemButton>
         </ListItem>
       </List>
-    </Sheet>
+    </SheetBox>
   );
 };
