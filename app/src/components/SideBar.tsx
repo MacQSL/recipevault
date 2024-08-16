@@ -1,37 +1,41 @@
 import {
   List,
-  ListDivider,
   ListItem,
   ListItemButton,
   ListSubheader,
   Sheet,
   Skeleton,
+  Typography,
 } from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
 import { getCookbooksWithRecipes } from "../api/query/cookbook-query";
 
 export const SideBar = () => {
-  const {
-    data: cookbooks,
-    isSuccess,
-    isLoading,
-  } = useQuery(getCookbooksWithRecipes());
+  const { data: cookbooks, isLoading } = useQuery(getCookbooksWithRecipes());
 
   return (
     <Sheet
       variant="outlined"
       sx={{
+        my: 2,
+        ml: 2,
+        p: 2,
+        display: "flex",
         width: 250,
-        borderRadius: "sm",
-        boxShadow: "md",
+        borderRadius: "md",
       }}
     >
-      <List size="lg">
-        <ListSubheader sx={{ fontSize: 12 }}>RecipeVault</ListSubheader>
+      <List size="md">
         <ListItem>
-          <ListItemButton>Home</ListItemButton>
+          <Typography level="h3" component="h1">
+            RecipeVault
+          </Typography>
         </ListItem>
-        <ListDivider />
+        <ListItem sx={{ mt: 4 }}>
+          <ListItemButton>
+            <ListItemButton>Dashboard</ListItemButton>
+          </ListItemButton>
+        </ListItem>
         <ListSubheader sx={{ fontSize: 12 }}>Cookbooks</ListSubheader>
         {cookbooks?.map((cookbook) => (
           <Skeleton loading={isLoading}>
@@ -40,8 +44,7 @@ export const SideBar = () => {
             </ListItem>
           </Skeleton>
         ))}
-        <ListDivider />
-        <ListItem>
+        <ListItem sx={{ mt: "auto" }}>
           <ListItemButton>Settings</ListItemButton>
         </ListItem>
         <ListItem>
