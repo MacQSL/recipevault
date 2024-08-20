@@ -1,6 +1,7 @@
 import { Avatar, Input } from "@mui/joy";
 import { ToggleMode } from "./ToggleMode";
 import { SheetBox } from "./SheetBox";
+import SearchIcon from "@mui/icons-material/Search";
 
 export const Header = () => {
   return (
@@ -9,9 +10,13 @@ export const Header = () => {
         justifyContent: "space-between",
       }}
     >
-      <Input placeholder="Search for recipes..." sx={{ width: 300 }}></Input>
+      <Input
+        placeholder="Search for recipes..."
+        sx={{ width: 300 }}
+        endDecorator={<SearchIcon />}
+      ></Input>
       <ToggleMode />
-      <Avatar variant="outlined" color="primary">
+      <Avatar variant="outlined" color="primary" size="sm">
         MD
       </Avatar>
     </SheetBox>

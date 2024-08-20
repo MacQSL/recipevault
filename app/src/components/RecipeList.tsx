@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@mui/joy";
 import { SheetBox } from "./SheetBox";
+import AddIcon from "@mui/icons-material/Add";
 
 export const RecipeList = () => {
   return (
@@ -21,22 +22,24 @@ export const RecipeList = () => {
           <Typography level="h4" component="h2">
             Recipes
           </Typography>
-          <Button sx={{ ml: "auto" }}>Create</Button>
+          <Button sx={{ ml: "auto" }} size="sm" endDecorator={<AddIcon />}>
+            Create
+          </Button>
         </ListItem>
         <ListDivider sx={{ mt: 2 }} />
         <ListItem>
-          <Avatar variant="outlined" color="primary">
+          <Avatar variant="outlined" color="primary" size="sm">
             MD
           </Avatar>
         </ListItem>
         <ListItem>
-          <Avatar variant="outlined" color="success">
-            JD
+          <Avatar variant="outlined" color="success" size="sm">
+            MD
           </Avatar>
         </ListItem>
         <ListItem>
-          <Avatar variant="outlined" color="warning">
-            HH
+          <Avatar variant="outlined" color="warning" size="sm">
+            MD
           </Avatar>
         </ListItem>
       </List>
