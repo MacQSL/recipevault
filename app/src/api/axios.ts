@@ -1,9 +1,9 @@
 import axios from "axios";
 
 /**
- * RecipeVault Axios instance
+ * RecipeVault Axios client
  *
  */
-export const instance = axios.create({
+export const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });

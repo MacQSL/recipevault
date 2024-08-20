@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Button,
   List,
   ListDivider,
@@ -14,18 +15,18 @@ export const RecipeList = () => {
     <SheetBox
       sx={{
         height: "100%",
-        width: 300,
+        width: 500,
       }}
     >
       <List>
-        <ListItem>
+        <Box sx={{ display: "flex" }}>
           <Typography level="h4" component="h2">
             Recipes
           </Typography>
           <Button sx={{ ml: "auto" }} size="sm" endDecorator={<AddIcon />}>
             Create
           </Button>
-        </ListItem>
+        </Box>
         <ListDivider sx={{ mt: 2 }} />
         <ListItem>
           <Avatar variant="outlined" color="primary" size="sm">

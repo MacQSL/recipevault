@@ -7,8 +7,6 @@ import {
   ListSubheader,
   Typography,
 } from "@mui/joy";
-import { useQuery } from "@tanstack/react-query";
-import { getCookbooksWithRecipes } from "../api/query/cookbook-query";
 import { SheetBox } from "./SheetBox";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -16,9 +14,10 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
+import { useCookbooksQuery } from "../api/query/cookbook-query";
 
 export const SideBar = () => {
-  const { data: cookbooks, isLoading } = useQuery(getCookbooksWithRecipes());
+  const { data: cookbooks } = useCookbooksQuery();
 
   const [showCookbooks, setShowCookbooks] = useState(false);
 

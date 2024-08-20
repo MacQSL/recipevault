@@ -1,21 +1,24 @@
-import { queryOptions } from "@tanstack/react-query";
-import { instance } from "../axios";
+import { useQuery } from "@tanstack/react-query";
+import { client } from "../axios";
 import { CookbookService } from "../service/cookbook-service";
 
-// Instantiate cookbook service
-const cookbookService = new CookbookService(instance);
+/**
+ * Cookbook query keys
+ *
+ */
+export const COOKBOOKS_QK = "cookbooks";
+
+const cookbookService = new CookbookService(client);
 
 /**
-
  * Get user cookbooks with recipes
  *
- * @returns {ICookbookRecipes[]}
  */
-export const getCookbooksWithRecipes = () => {
-  return queryOptions({
-    queryKey: ["getCookbooksWithRecipes"],
+export const useCookbooksQuery = () => {
+  return useQuery({
+    queryKey: [COOKBOOKS_QK],
     queryFn: async () => {
-      return await cookbookService.getCookbooksWithRecipes();
+      return cookbookService.getCookbooksWithRecipes();
     },
   });
 };
