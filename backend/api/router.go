@@ -23,10 +23,6 @@ func addRoutes(mux *http.ServeMux, log *util.Logger, db *sql.DB) {
 	mux.Handle("GET /health", handler.GetHealth())
 	// Get all user Cookbooks with Recipes
 	mux.Handle("GET /cookbooks", handler.GetUserCookbooksWithRecipes(log, cs))
-	// // Deprecated? Get Cookbook by ID
-	// mux.Handle("GET /cookbooks/{cookbookID}", cookbookAuth(handler.GetUserCookbook(log, cs)))
-	// // Deprecated? Get Cookbook Recipes
-	// mux.Handle("GET /cookbooks/{cookbookID}/recipes", cookbookAuth(handler.GetCookbookRecipes(log, rs)))
 	// Get Recipe by ID
 	mux.Handle("GET /cookbooks/{cookbookID}/recipes/{recipeID}", cookbookAuth(handler.GetRecipe(log, rs)))
 
