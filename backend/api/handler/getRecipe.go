@@ -15,7 +15,6 @@ func GetRecipe(log *util.Logger, s *service.RecipeService) http.Handler {
 
 		data, err := s.GetRecipe(recipeID)
 
-		// handle database error
 		if err != nil {
 			log.Error("handler->GetRecipe:", err)
 			response.Send404(w, "recipe not found")

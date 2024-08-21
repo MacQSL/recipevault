@@ -22,7 +22,7 @@ func addRoutes(mux *http.ServeMux, log *util.Logger, db *sql.DB) {
 	// Get health check
 	mux.Handle("GET /health", handler.GetHealth())
 	// Get all user Cookbooks with Recipes
-	mux.Handle("GET /cookbooks", handler.GetUserCookbooksWithRecipes(log, cs))
+	mux.Handle("GET /cookbooks", handler.GetUserCookbooks(log, cs))
 	// Get Recipe by ID
 	mux.Handle("GET /cookbooks/{cookbookID}/recipes/{recipeID}", cookbookAuth(handler.GetRecipe(log, rs)))
 

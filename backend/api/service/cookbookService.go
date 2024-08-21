@@ -27,17 +27,17 @@ func InitCookbookService(db *sql.DB) *CookbookService {
 }
 
 // Get cookbook
-func (s *CookbookService) GetCookbook(cookbookID int) (*models.Cookbook, error) {
+func (s *CookbookService) GetCookbook(cookbookID int) (models.Cookbook, error) {
 	return s.repository.GetCookbookByID(cookbookID)
 }
 
 // Get user cookbooks
-func (s *CookbookService) GetUserCookbooksWithRecipes(userID int) (*[]models.CookbookRecipes, error) {
-	return s.repository.GetCookbooksWithRecipesByUserID(userID)
+func (s *CookbookService) GetUserCookbooks(userID int) ([]models.Cookbook, error) {
+	return s.repository.GetCookbooksByUserID(userID)
 }
 
 // Get user cookbook
-func (s *CookbookService) GetUserCookbook(cookbookID int, userID int) (*models.Cookbook, error) {
+func (s *CookbookService) GetUserCookbook(cookbookID int, userID int) (models.Cookbook, error) {
 	return s.repository.GetCookbookByIDAndUserID(cookbookID, userID)
 }
 

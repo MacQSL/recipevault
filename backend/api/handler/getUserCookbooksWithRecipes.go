@@ -8,11 +8,11 @@ import (
 )
 
 // Get all user cookbooks
-func GetUserCookbooksWithRecipes(log *util.Logger, s *service.CookbookService) http.Handler {
+func GetUserCookbooks(log *util.Logger, s *service.CookbookService) http.Handler {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		userID := GetCtxUserID(r)
-		data, err := s.GetUserCookbooksWithRecipes(userID)
+		data, err := s.GetUserCookbooks(userID)
 
 		if err != nil {
 			log.Error("handler->GetUserCookbooks", err)
