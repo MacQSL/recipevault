@@ -21,6 +21,7 @@ export $(shell sed 's/=.*//' .env)
 
 ## Performs all commands necessary to run all backend docker services (db, migrations, api)
 backend: | close build-backend run-backend
+web: | close build-web run-web
 
 ## ------------------------------------------------------------------------------
 ## Setup/Cleanup Commands
@@ -36,13 +37,13 @@ close: ## Closes all project containers
 	@echo "==============================================="
 	@echo "Make: close - closing Docker containers"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml down
+	@docker compose down
 
 clean: ## Closes and cleans (removes) all project containers
 	@echo "==============================================="
 	@echo "Make: clean - closing and cleaning Docker containers"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml down -v --rmi all --remove-orphans
+	@docker compose down -v --rmi all --remove-orphans
 
 ## ------------------------------------------------------------------------------
 ## Build/Run Backend Commands
@@ -53,13 +54,30 @@ build-backend: ## Builds all backend containers
 	@echo "==============================================="
 	@echo "Make: build-backend - building backend images"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml up -d --build db migrations api
+	@docker compose up -d --build recipevault-db recipevault-migrations recipevault-api
 
 run-backend: ## Runs all backend containers
 	@echo "==============================================="
 	@echo "Make: run-backend - running backend images"
 	@echo "==============================================="
-	@docker-compose -f docker-compose.yml up -d db migrations api
+	@docker compose up -d recipevault-db recipevault-migrations recipevault-api
+
+## ------------------------------------------------------------------------------
+## Build/Run App Commands
+## - Builds all frontend services (db,api,migrations,app)
+## ------------------------------------------------------------------------------
+
+build-web: ## Builds all web containers
+	@echo "==============================================="
+	@echo "Make: build-frontend - building frontend images"
+	@echo "==============================================="
+	@docker compose up -d --build recipevault-db recipevault-migrations recipevault-api recipevault-app
+
+run-web: ## Runs all web containers
+	@echo "==============================================="
+	@echo "Make: run-frontend - running frontend images"
+	@echo "==============================================="
+	@docker compose up -d recipevault-db recipevault-migrations recipevault-api recipevault-app
 
 ## ------------------------------------------------------------------------------
 ## Test Commands

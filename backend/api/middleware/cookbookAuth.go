@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"errors"
 	"net/http"
 	"recipevault/api/handler"
 	"recipevault/api/response"
@@ -18,7 +17,7 @@ func CookbookAuthMiddleware(log *util.Logger, s *service.CookbookService) func(h
 			cookbookID := handler.GetPathID(r, "cookbookID")
 
 			if cookbookID == -1 {
-				response.Send400(w, errors.New("cannot retrieve path param"), "invalid cookbookID path param")
+				response.Send400(w, "invalid cookbookID path param")
 				return
 			}
 
@@ -31,7 +30,7 @@ func CookbookAuthMiddleware(log *util.Logger, s *service.CookbookService) func(h
 			if access {
 				next.ServeHTTP(w, r)
 			} else {
-				response.Send403(w, errors.New("cookbook auth failed"), "cookbook access denied")
+				response.Send403(w, "cookbook access forbidden")
 			}
 		})
 	}
