@@ -19,7 +19,9 @@ export const AppLayout = (props: PropsWithChildren) => {
         }}
       >
         <Header />
-        <Box sx={{ display: "flex", gap: 2 }}>{props.children}</Box>
+        <Box sx={{ display: "flex", gap: 2, height: "100%" }}>
+          {props.children}
+        </Box>
       </Box>
     </Sheet>
   );

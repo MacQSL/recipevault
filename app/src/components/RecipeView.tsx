@@ -16,15 +16,19 @@ export const RecipeView = () => {
         width: "100%",
         display: "flex",
         flexDirection: "column",
+        gap: 2,
       }}
     >
-      <Box sx={{ display: "flex" }}>
-        <Typography level="h4" component="h3">
-          Recipe Name
-        </Typography>
-        <Button sx={{ ml: "auto" }} size="sm">
-          Edit
-        </Button>
+      <Box>
+        <Box sx={{ display: "flex" }}>
+          <Typography level="h4" component="h3">
+            Recipe Name
+          </Typography>
+          <Button sx={{ ml: "auto" }} size="sm">
+            Edit
+          </Button>
+        </Box>
+        <Typography level="body-md">Recipe description</Typography>
       </Box>
       <FormControl>
         <FormLabel>Ingredients</FormLabel>

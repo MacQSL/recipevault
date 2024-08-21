@@ -15,7 +15,7 @@ export const RecipeList = () => {
     <SheetBox
       sx={{
         height: "100%",
-        width: 500,
+        width: 600,
       }}
     >
       <List>
