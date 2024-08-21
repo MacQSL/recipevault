@@ -9,6 +9,7 @@ type CookbookRepository struct {
 	db *sql.DB
 }
 
+// NewCookbookRepository creates a new instance of CookbookRepository
 func NewCookbookRepository(db *sql.DB) *CookbookRepository {
 	return &CookbookRepository{
 		db: db,

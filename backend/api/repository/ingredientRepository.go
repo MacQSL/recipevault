@@ -9,6 +9,7 @@ type IngredientRepository struct {
 	db *sql.DB
 }
 
+// NewIngredientRepository creates a new instance of IngredientRepository
 func NewIngredientRepository(db *sql.DB) *IngredientRepository {
 	return &IngredientRepository{
 		db: db,
