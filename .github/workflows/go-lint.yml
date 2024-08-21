@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: stable
+          cache: true
+          cache-dependency-path: **/go.sum
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
