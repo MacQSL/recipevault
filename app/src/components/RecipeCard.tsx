@@ -1,5 +1,5 @@
 import { Avatar, Box, Card, Typography } from "@mui/joy";
-import { IRecipe } from "../api/service/recipe-service.interface";
+import { IRecipe } from "../services/recipe-service.interface";
 
 interface IRecipeCardProps {
   recipe: IRecipe;

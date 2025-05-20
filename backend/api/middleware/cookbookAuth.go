@@ -25,6 +25,8 @@ func CookbookAuthMiddleware(log *util.Logger, s *service.CookbookService) func(h
 			// user cookbook access within the token. I think the performance
 			// gains would be very trivial, but would prevent having to call the database
 			// on every cookbook ID related endpoint before the actual query
+			// It should call the database and find all cookbooks the user has access to
+			// and store in the token
 			access := s.CanUserAccessCookbook(cookbookID, userID)
 
 			if access {

@@ -39,3 +39,9 @@ type Ingredient struct {
 func (r *Ingredient) Ptrs() []any {
 	return []any{&r.IngredientID, &r.RecipeID, &r.Measurement, &r.Description, &r.Lexorank}
 }
+
+// RecipeIngredients - Recipe with Ingredients
+type RecipeIngredients struct {
+	Recipe
+	Ingredients []Ingredient `json:"ingredients"`
+}

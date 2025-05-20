@@ -24,6 +24,7 @@ func (r *IngredientRepository) GetIngredientsByRecipeID(recipeID int) ([]models.
       i.recipe_id,
       i.measurement,
       i.description,
+      i.lexorank
     FROM ingredient i
     WHERE i.recipe_id = $1`
 
